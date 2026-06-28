@@ -54,10 +54,10 @@ public class ColaboradorService {
     public ColaboradorDto toDto(ColaboradorEntity entity) {
         ColaboradorDto dto = new ColaboradorDto();
 
+        dto.setId(entity.getId());
         dto.setNome(entity.getNome());
         dto.setEmail(entity.getEmail());
         dto.setDataNascimento(entity.getDataNascimento());
-        dto.setSenha(entity.getSenha());
         dto.setMatricula(entity.getMatricula());
 
         return dto;
@@ -66,6 +66,7 @@ public class ColaboradorService {
     public ColaboradorEntity toEntity(ColaboradorDto dto) {
         ColaboradorEntity entity = new ColaboradorEntity();
 
+        entity.setId(dto.getId());
         entity.setNome(dto.getNome());
         entity.setEmail(dto.getEmail());
         entity.setDataNascimento(dto.getDataNascimento());

@@ -14,7 +14,7 @@ public class ColaboradorDto {
     private String email;
 
     @NotBlank(message = "Informe uma senha ")
-    @Min(value = 5)
+    @Size(min = 5)
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter no mínimo 5 caracteres, conter números e letras")
     private String senha;
 
