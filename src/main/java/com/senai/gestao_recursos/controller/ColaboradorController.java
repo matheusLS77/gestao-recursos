@@ -3,6 +3,9 @@ package com.senai.gestao_recursos.controller;
 import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import com.senai.gestao_recursos.service.ColaboradorService;
+import com.senai.gestao_recursos.sessoes.SessaoDto;
+import com.senai.gestao_recursos.sessoes.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,20 +25,28 @@ public class ColaboradorController {
     }
 
     @PostMapping("/login")
-    public String realizarLogin(ColaboradorDto colaborador, Model model, RedirectAttributes redirectAttributes) {
-        ColaboradorDto retorno = service.realizarLogin(colaborador);
+    public String realizarLogin(ColaboradorDto colaborador, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
+        ColaboradorDto colaboradorDto = service.realizarLogin(colaborador);
 
-        if (retorno != null) {
-            redirectAttributes.addFlashAttribute("colaborador", " Bem-vindo ao sistema " + retorno.getNome() + "! ");
-            return "home";
+        if (colaboradorDto.getNome() != null) {
+            redirectAttributes.addFlashAttribute("colaborador", " Bem-vindo ao sistema " + colaboradorDto.getNome() + "! ");
+
+            SessaoDto sessaoDto = new SessaoDto();
+            sessaoDto.setUsuarioId(colaboradorDto.getId());
+            sessaoDto.setUsuarioNome(colaborador.getNome());
+
+            SessaoUtil.RegistrarSessao(session, sessaoDto);
+
+            return "redirect:/home";
         }
+
         model.addAttribute("erro", "E-mail ou senha inválidos. ");
 
-        return "redirect:/login";
+        return "login";
     }
 
     @PostMapping("/colaboradores")
-    public String cadastrarProduto(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
+    public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
                                    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {

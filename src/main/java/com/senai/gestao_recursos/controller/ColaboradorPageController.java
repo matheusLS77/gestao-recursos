@@ -2,6 +2,9 @@ package com.senai.gestao_recursos.controller;
 
 import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.service.ColaboradorService;
+import com.senai.gestao_recursos.sessoes.SessaoDto;
+import com.senai.gestao_recursos.sessoes.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +25,14 @@ public class ColaboradorPageController {
     }
 
     @GetMapping("/home")
-    public String getHome() {
+    public String getHome(HttpSession session, Model model) {
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuarioLogado", sessaoDto);
         return "home";
     }
 
