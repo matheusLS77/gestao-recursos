@@ -28,21 +28,21 @@ public class ColaboradorController {
     public String realizarLogin(ColaboradorDto colaborador, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
         ColaboradorDto colaboradorDto = service.realizarLogin(colaborador);
 
-        if (colaboradorDto.getNome() != null) {
-            redirectAttributes.addFlashAttribute("colaborador", " Bem-vindo ao sistema " + colaboradorDto.getNome() + "! ");
+        if (colaboradorDto.getNome() == null) {
+            model.addAttribute("erro", "E-mail ou senha inválidos. ");
 
-            SessaoDto sessaoDto = new SessaoDto();
-            sessaoDto.setUsuarioId(colaboradorDto.getId());
-            sessaoDto.setUsuarioNome(colaborador.getNome());
-
-            SessaoUtil.RegistrarSessao(session, sessaoDto);
-
-            return "redirect:/home";
+            return "login";
         }
 
-        model.addAttribute("erro", "E-mail ou senha inválidos. ");
+        SessaoDto sessaoDto = new SessaoDto();
+        sessaoDto.setUsuarioId(colaboradorDto.getId());
+        sessaoDto.setUsuarioNome(colaborador.getNome());
 
-        return "login";
+        SessaoUtil.RegistrarSessao(session, sessaoDto);
+
+        redirectAttributes.addFlashAttribute("colaborador", " Bem-vindo ao sistema " + colaboradorDto.getNome() + "! ");
+
+        return "redirect:/home";
     }
 
     @PostMapping("/colaboradores")
