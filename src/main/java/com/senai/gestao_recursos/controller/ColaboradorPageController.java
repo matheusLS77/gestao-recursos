@@ -16,6 +16,16 @@ public class ColaboradorPageController {
         this.service = service;
     }
 
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
+
+    @GetMapping("/home")
+    public String getHome() {
+        return "home";
+    }
+
     @GetMapping("/colaboradorcadastrar")
     public String getCadastrar(Model model) {
         model.addAttribute("colaborador", new ColaboradorDto());

@@ -21,6 +21,18 @@ public class ColaboradorService {
         repository.save(toEntity(dto));
     }
 
+    public ColaboradorDto realizarLogin(ColaboradorDto usuarioDto){
+        Optional<ColaboradorEntity> colaboradorOp = repository.findByEmailAndSenha(usuarioDto.getEmail(), usuarioDto.getSenha());
+
+        ColaboradorDto dto = new ColaboradorDto();
+
+        if (colaboradorOp.isPresent()) {
+            dto = toDto(colaboradorOp.get());
+        }
+
+        return dto;
+    }
+
     public List<ColaboradorDto> listar() {
         List<ColaboradorEntity> colaboradores = repository.findAll();
         List<ColaboradorDto> colaboradorDtos = new ArrayList<>();
