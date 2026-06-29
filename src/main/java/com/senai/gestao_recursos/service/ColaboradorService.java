@@ -21,8 +21,8 @@ public class ColaboradorService {
         repository.save(toEntity(dto));
     }
 
-    public ColaboradorDto realizarLogin(ColaboradorDto usuarioDto){
-        Optional<ColaboradorEntity> colaboradorOp = repository.findByEmailAndSenha(usuarioDto.getEmail(), usuarioDto.getSenha());
+    public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
+        Optional<ColaboradorEntity> colaboradorOp = repository.findByEmailAndSenha(colaboradorDto.getEmail(), colaboradorDto.getSenha());
 
         ColaboradorDto dto = new ColaboradorDto();
 
