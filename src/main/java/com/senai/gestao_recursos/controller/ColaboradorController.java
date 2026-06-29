@@ -21,7 +21,7 @@ public class ColaboradorController {
     }
 
     @PostMapping("/colaboradores")
-    public String cadastrarProduto(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
+    public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
                                    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
