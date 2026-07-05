@@ -2,7 +2,11 @@ package com.senai.gestao_recursos.controller;
 
 import com.senai.gestao_recursos.dto.RecursoDto;
 import com.senai.gestao_recursos.service.RecursoService;
+import com.senai.gestao_recursos.sessoes.SessaoDto;
+import com.senai.gestao_recursos.sessoes.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,7 +27,13 @@ public class RecursoController {
 
     @PostMapping("/recursos")
     private String cadastrarProduto(@Valid @ModelAttribute("recurso") RecursoDto dto,
-                                    BindingResult bindingResult, RedirectAttributes redirectAttributes){
+                                    BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session){
+
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
 
         if(bindingResult.hasErrors()){
             return "recursocadastrar";
@@ -36,7 +46,13 @@ public class RecursoController {
     }
 
     @DeleteMapping("/recursosexcluir/{id}")
-    public ResponseEntity<String> remover(@PathVariable Long id) {
+    public ResponseEntity<String> remover(@PathVariable Long id, HttpSession session) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso não autorizado");
+        }
+
         recursoService.remover(id);
         return ResponseEntity.ok().body("Excluído ");
     }

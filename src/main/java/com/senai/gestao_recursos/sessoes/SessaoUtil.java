@@ -8,11 +8,11 @@ public final class SessaoUtil {
     public SessaoUtil() {
     }
 
-    public static void RegistrarSessao(HttpSession session, SessaoDto sessaoDto) {
+    public static void registrarSessao(HttpSession session, SessaoDto sessaoDto) {
         session.setAttribute(USUARIO_LOGADO, sessaoDto);
     }
 
-    public static SessaoDto ObterSessao(HttpSession session) {
+    public static SessaoDto obterSessao(HttpSession session) {
         Object usuarioLogado = session.getAttribute(USUARIO_LOGADO);
 
         if (usuarioLogado == null) {

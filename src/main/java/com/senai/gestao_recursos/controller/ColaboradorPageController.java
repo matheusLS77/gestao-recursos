@@ -31,7 +31,7 @@ public class ColaboradorPageController {
 
     @GetMapping("/home")
     public String getHome(HttpSession session, Model model) {
-        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+        SessaoDto sessaoDto = SessaoUtil.obterSessao(session);
 
         if (sessaoDto == null) {
             return "redirect:/login";
@@ -42,14 +42,26 @@ public class ColaboradorPageController {
     }
 
     @GetMapping("/colaboradorcadastrar")
-    public String getCadastrar(Model model) {
+    public String getCadastrar(Model model, HttpSession session) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("colaborador", new ColaboradorDto());
 
         return "colaboradorcadastrar";
     }
 
     @GetMapping("/colaboradorlista")
-    public String getColaboradores(Model model) {
+    public String getColaboradores(Model model, HttpSession session) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
         List<ColaboradorDto> colaboradores = colaboradorService.listar();
 
         model.addAttribute("colaboradores", colaboradores);

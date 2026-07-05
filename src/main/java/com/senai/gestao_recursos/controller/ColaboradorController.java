@@ -7,6 +7,7 @@ import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,28 +30,28 @@ public class ColaboradorController {
 
     @PostMapping("/login")
     public String realizarLogin(ColaboradorDto colaborador, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
-        ColaboradorDto colaboradorDto = service.realizarLogin(colaborador);
+        ColaboradorDto colaboradorLogado = service.realizarLogin(colaborador);
 
-        if (colaboradorDto.getNome() == null) {
+        if (colaboradorLogado == null || colaboradorLogado.getId() == null) {
             model.addAttribute("erro", "E-mail ou senha inválidos. ");
 
             return "login";
         }
 
-        SessaoDto sessaoDto = new SessaoDto();
-        sessaoDto.setUsuarioId(colaboradorDto.getId());
-        sessaoDto.setUsuarioNome(colaborador.getNome());
-
-        SessaoUtil.RegistrarSessao(session, sessaoDto);
-
-        redirectAttributes.addFlashAttribute("colaborador", " Bem-vindo ao sistema " + colaboradorDto.getNome() + "! ");
+        redirectAttributes.addFlashAttribute("mensagem", " Bem-vindo ao sistema " + colaboradorLogado.getNome() + "! ");
 
         return "redirect:/home";
     }
 
     @PostMapping("/colaboradores")
     public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
 
         if (bindingResult.hasErrors()) {
             return "colaboradorcadastrar";
@@ -63,7 +64,13 @@ public class ColaboradorController {
     }
 
     @DeleteMapping("/colaboradoresexcluir/{id}")
-    public ResponseEntity<String> remover(@PathVariable Long id) {
+    public ResponseEntity<String> remover(@PathVariable Long id, HttpSession session) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso não autorizado");
+        }
+
         service.remover(id);
         return ResponseEntity.ok().body("Excluído ");
     }
