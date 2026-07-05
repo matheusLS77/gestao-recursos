@@ -20,7 +20,7 @@ public class ProdutoPageController {
 
     @GetMapping("/produtocadastrar")
     public String getCadastrar(Model model) {
-        model.addAttribute("produtos", new ProdutoDto());
+        model.addAttribute("produto", new ProdutoDto());
 
         return "produtocadastrar";
     }
