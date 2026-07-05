@@ -21,11 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ColaboradorController {
     private final ColaboradorService service;
-    private final ColaboradorRepository repository;
 
-    public ColaboradorController(ColaboradorService service, ColaboradorRepository repository) {
+    public ColaboradorController(ColaboradorService service) {
         this.service = service;
-        this.repository = repository;
     }
 
     @PostMapping("/login")
@@ -37,6 +35,11 @@ public class ColaboradorController {
 
             return "login";
         }
+
+        SessaoDto sessaoDto = new SessaoDto();
+        sessaoDto.setUsuarioId(colaboradorLogado.getId());
+        sessaoDto.setUsuarioNome(colaboradorLogado.getNome());
+        SessaoUtil.registrarSessao(session, sessaoDto);
 
         redirectAttributes.addFlashAttribute("mensagem", " Bem-vindo ao sistema " + colaboradorLogado.getNome() + "! ");
 

@@ -29,6 +29,9 @@ public class ReservaDto {
     @NotBlank(message = "Motivo do cancelamento é obrigatório")
     private String motivoCancelamento;
 
+    private String colaboradorNome;
+    private String recursoDescricao;
+
     public ReservaDto() {
     }
 
@@ -94,5 +97,21 @@ public class ReservaDto {
 
     public void setMotivoCancelamento(String motivoCancelamento) {
         this.motivoCancelamento = motivoCancelamento;
+    }
+
+    public String getColaboradorNome() {
+        return colaboradorNome;
+    }
+
+    public void setColaboradorNome(String colaboradorNome) {
+        this.colaboradorNome = colaboradorNome;
+    }
+
+    public String getRecursoDescricao() {
+        return recursoDescricao;
+    }
+
+    public void setRecursoDescricao(String recursoDescricao) {
+        this.recursoDescricao = recursoDescricao;
     }
 }
