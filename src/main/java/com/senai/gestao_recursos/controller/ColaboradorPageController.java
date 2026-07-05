@@ -13,10 +13,15 @@ import java.util.List;
 
 @Controller
 public class ColaboradorPageController {
-    private final ColaboradorService service;
+    private final ColaboradorService colaboradorService;
 
-    public ColaboradorPageController(ColaboradorService service) {
-        this.service = service;
+    public ColaboradorPageController(ColaboradorService colaboradorService) {
+        this.colaboradorService = colaboradorService;
+    }
+
+    @GetMapping("/")
+    public String getIndex(){
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -45,7 +50,7 @@ public class ColaboradorPageController {
 
     @GetMapping("/colaboradorlista")
     public String getColaboradores(Model model) {
-        List<ColaboradorDto> colaboradores = service.listar();
+        List<ColaboradorDto> colaboradores = colaboradorService.listar();
 
         model.addAttribute("colaboradores", colaboradores);
 

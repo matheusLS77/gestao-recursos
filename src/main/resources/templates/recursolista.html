@@ -39,15 +39,15 @@
 <main class="container py-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>
-            <h1 class="h3 mb-1">Colaboradores</h1>
-            <p class="text-secondary mb-0">Lista de colaboradores cadastrados no sistema.</p>
+            <h1 class="h3 mb-1">Recursos</h1>
+            <p class="text-secondary mb-0">Lista de recursos cadastrados no sistema.</p>
         </div>
 
-        <a class="btn btn-primary" th:href="@{/colaboradorcadastrar}">Novo colaborador</a>
+        <a class="btn btn-primary" th:href="@{/recursocadastrar}">Novo recurso</a>
     </div>
 
     <div class="alert alert-success" role="alert" th:if="${mensagem}" th:text="${mensagem}">
-        Usuário salvo com sucesso.
+        Recurso salvo com sucesso.
     </div>
 
     <div class="card shadow-sm">
@@ -56,30 +56,55 @@
                 <table class="table table-striped align-middle mb-0">
                     <thead class="table-primary">
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">E-mail</th>
-                        <th scope="col">Matricula</th>
-                        <th scope="col">Data de Nascimento</th>
-                        <th scope="col" class="text-end">Ações</th>
+                        <th>ID</th>
+                        <th>Descrição</th>
+                        <th>Tipo</th>
+                        <th>Dias disponíveis</th>
+                        <th>Data inicial</th>
+                        <th>Data final</th>
+                        <th>Hora inicial</th>
+                        <th>Hora final</th>
+                        <th class="text-end">Ações</th>
                     </tr>
                     </thead>
+
                     <tbody>
-                    <tr th:each="colaborador : ${colaboradores}">
-                        <td th:text="${colaborador.id}">1</td>
-                        <td th:text="${colaborador.nome}">Maria Silva</td>
-                        <td th:text="${colaborador.email}">maria@email.com</td>
-                        <td th:text="${colaborador.matricula}">456</td>
-                        <td th:text="${colaborador.dataNascimento}">9/9/1999</td>
+
+                    <tr th:each="recurso : ${recursos}">
+                        <td th:text="${recurso.id}"></td>
+                        <td th:text="${recurso.descricao}"></td>
+                        <td th:text="${recurso.tipo}"></td>
+
+                        <td>
+                <span th:each="dia, stat : ${recurso.diasDaSemanaDisponivel}">
+                    <span th:text="${dia}"></span><span th:if="${!stat.last}">, </span>
+                </span>
+                        </td>
+
+                        <td th:text="${recurso.dataInicialAgendamento}"></td>
+                        <td th:text="${recurso.dataFinalAgendamento}"></td>
+                        <td th:text="${recurso.horaInicialAgendamento}"></td>
+                        <td th:text="${recurso.horaFinalAgendamento}"></td>
+
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-primary me-1" th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">Editar</a>
-                            <button th:data-id="${colaborador.id}" class="excluir btn btn-sm btn-outline-danger">Excluir</button>
+                            <a class="btn btn-sm btn-outline-primary me-1"
+                               th:href="@{/recursoatualizar/{id}(id=${recurso.id})}">
+                                Editar
+                            </a>
+
+                            <button class="btn btn-sm btn-outline-danger excluir"
+                                    th:data-id="${recurso.id}">
+                                Excluir
+                            </button>
                         </td>
                     </tr>
 
-                    <tr th:if="${#lists.isEmpty(colaboradores)}">
-                        <td colspan="4" class="text-center text-secondary py-4">Nenhum colaborador cadastrado.</td>
+                    <tr th:if="${#lists.isEmpty(recursos)}">
+                        <td colspan="9" class="text-center text-secondary py-4">
+                            Nenhum recurso cadastrado.
+                        </td>
                     </tr>
+
                     </tbody>
                 </table>
             </div>

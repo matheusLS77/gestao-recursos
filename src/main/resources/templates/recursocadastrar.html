@@ -26,6 +26,9 @@
                     <a class="nav-link text-light-emphasis" th:href="@{/colaboradorlista}">Colaboradores</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-light-emphasis" th:href="@{/recursolista}">Equipamentos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-light-emphasis" th:href="@{/login}">Sair</a>
                 </li>
             </ul>
@@ -38,14 +41,14 @@
         <div class="col-12 col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h1 class="h3 mb-1">Cadastrar produto</h1>
-                    <p class="text-secondary mb-0">Preencha os dados para cadastrar um novo produto.</p>
+                    <h1 class="h3 mb-1">Cadastrar Recurso</h1>
+                    <p class="text-secondary mb-0">Preencha os dados para cadastrar um novo recurso.</p>
                 </div>
             </div>
 
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form th:action="@{/produtos}" th:object="${produto}" method="post">
+                    <form th:action="@{/recursos}" th:object="${recurso}" method="post">
                         <div class="mb-3">
                             <label for="descricao" class="form-label">Descrição</label>
                             <input type="text" class="form-control" id="descricao" th:field="*{descricao}" placeholder="Digite a descrição" required>
@@ -66,77 +69,55 @@
                             <label class="form-label">Dias da Semana Disponível</label>
 
                             <div class="row">
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="domingo" th:field="*{diasDaSemanaDisponivel[0]}">
-                                    <label class="form-check-label" for="domingo">Domingo</label>
-                                </div>
+                                <div class="col-md-2 form-check" th:each="dia : ${T(java.time.DayOfWeek).values()}">
+                                    <input class="form-check-input" type="checkbox" th:field="*{diasDaSemanaDisponivel}" th:value="${dia}" th:id="${dia.name()}">
 
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="segunda" th:field="*{diasDaSemanaDisponivel[1]}">
-                                    <label class="form-check-label" for="segunda">Segunda</label>
-                                </div>
-
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="terca" th:field="*{diasDaSemanaDisponivel[2]}">
-                                    <label class="form-check-label" for="terca">Terça</label>
-                                </div>
-
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="quarta" th:field="*{diasDaSemanaDisponivel[3]}">
-                                    <label class="form-check-label" for="quarta">Quarta</label>
-                                </div>
-
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="quinta" th:field="*{diasDaSemanaDisponivel[4]}">
-                                    <label class="form-check-label" for="quinta">Quinta</label>
-                                </div>
-
-                                <div class="col-md-2 form-check">
-                                    <input class="form-check-input" type="checkbox" id="sexta" th:field="*{diasDaSemanaDisponivel[5]}">
-                                    <label class="form-check-label" for="sexta">Sexta</label>
+                                    <label class="form-check-label"
+                                           th:for="${dia.name()}"
+                                           th:text="${#strings.capitalize(#strings.toLowerCase(dia.name()))}">
+                                    </label>
                                 </div>
                             </div>
 
                             <div class="text-danger small mt-1"
                                  th:if="${#fields.hasErrors('diasDaSemanaDisponivel')}"
                                  th:errors="*{diasDaSemanaDisponivel}">
-                                Erro nos dias da semana
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="dataInicial" class="form-label">Data Inicial</label>
-                            <input type="date" class="form-control" id="dataInicial" th:field="*{dataInicial}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataInicial')}" th:errors="*{dataInicial}">
+                            <input type="date" class="form-control" id="dataInicial" th:field="*{dataInicialAgendamento}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataInicialAgendamento')}" th:errors="*{dataInicialAgendamento}">
                                 Erro na data inicial
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="dataFinal" class="form-label">Data Final</label>
-                            <input type="date" class="form-control" id="dataFinal" th:field="*{dataFinal}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataFinal')}" th:errors="*{dataFinal}">
+                            <label for="dataFinalAgendamento" class="form-label">Data Final</label>
+                            <input type="date" class="form-control" id="dataFinalAgendamento" th:field="*{dataFinalAgendamento}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataFinalAgendamento')}" th:errors="*{dataFinalAgendamento}">
                                 Erro na data final
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="horarioInicial" class="form-label">Horário Inicial</label>
-                            <input type="time" class="form-control" id="horarioInicial" th:field="*{horarioInicial}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horarioInicial')}" th:errors="*{horarioInicial}">
+                            <label for="horaInicialAgendamento" class="form-label">Horário Inicial</label>
+                            <input type="time" class="form-control" id="horaInicialAgendamento" th:field="*{horaInicialAgendamento}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaInicialAgendamento')}" th:errors="*{horaInicialAgendamento}">
                                 Erro no horário inicial
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="horarioFinal" class="form-label">Horário Final</label>
-                            <input type="time" class="form-control" id="horarioFinal" th:field="*{horarioFinal}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horarioFinal')}" th:errors="*{horarioFinal}">
+                            <label for="horaFinalAgendamento" class="form-label">Horário Final</label>
+                            <input type="time" class="form-control" id="horaFinalAgendamento" th:field="*{horaFinalAgendamento}">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaFinalAgendamento')}" th:errors="*{horaFinalAgendamento}">
                                 Erro no horário final
                             </div>
                         </div>
                         <div class="d-flex justify-content-end gap-2">
-                            <a class="btn btn-outline-secondary" th:href="@{/colaboradorlista}">Cancelar</a>
+                            <a class="btn btn-outline-secondary" th:href="@{/recursolista}">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>

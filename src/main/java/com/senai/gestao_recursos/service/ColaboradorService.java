@@ -33,7 +33,7 @@ public class ColaboradorService {
             throw new IllegalArgumentException("Este e-mail já está cadastrado.");
         }
 
-        repository.save(toEntity(dto));
+        repository.save(paraEntity(dto));
     }
 
     public ColaboradorDto realizarLogin(ColaboradorDto colaboradorDto){
@@ -42,7 +42,7 @@ public class ColaboradorService {
         ColaboradorDto dto = new ColaboradorDto();
 
         if (colaboradorOp.isPresent()) {
-            dto = toDto(colaboradorOp.get());
+            dto = paraDto(colaboradorOp.get());
         }
 
         return dto;
@@ -53,7 +53,7 @@ public class ColaboradorService {
         List<ColaboradorDto> colaboradorDtos = new ArrayList<>();
 
         for (ColaboradorEntity colaborador : colaboradores) {
-            colaboradorDtos.add(toDto(colaborador));
+            colaboradorDtos.add(paraDto(colaborador));
         }
         return colaboradorDtos;
     }
@@ -78,7 +78,7 @@ public class ColaboradorService {
         repository.deleteById(id);
     }
 
-    public ColaboradorDto toDto(ColaboradorEntity entity) {
+    public ColaboradorDto paraDto(ColaboradorEntity entity) {
         ColaboradorDto dto = new ColaboradorDto();
 
         dto.setId(entity.getId());
@@ -90,7 +90,7 @@ public class ColaboradorService {
         return dto;
     }
 
-    public ColaboradorEntity toEntity(ColaboradorDto dto) {
+    public ColaboradorEntity paraEntity(ColaboradorDto dto) {
         ColaboradorEntity entity = new ColaboradorEntity();
 
         entity.setId(dto.getId());
