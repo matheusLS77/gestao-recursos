@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 public class ProdutoEntity {
@@ -23,8 +26,15 @@ public class ProdutoEntity {
     private String tipo;
 
 
-    @ElementCollection
-    private boolean[] diasDaSemanaDisponivel = new boolean[6];
+//    @ElementCollection
+//    @CollectionTable(
+//            name = "agenda_dias_disponiveis",
+//            joinColumns = @JoinColumn(name = "agenda_id")
+//    )
+//    @OrderColumn(name = "dia")
+//    @Column(name = "disponivel")
+//    private List<Boolean> diasDaSemanaDisponivel =
+//            new ArrayList<>(Arrays.asList(false, false, false, false, false, false, false));
 
     @Column
     private LocalDate dataInicial;
@@ -38,11 +48,11 @@ public class ProdutoEntity {
     @Column
     private LocalTime horarioFinal;
 
-    public ProdutoEntity(Long id, String descricao, String tipo, boolean[] diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
+    public ProdutoEntity(Long id, String descricao, String tipo, List<Boolean> diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo;
-        this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
+ //       this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
         this.dataInicial = dataInicial;
         this.dataFinal = dataFinal;
         this.horarioInicial = horarioInicial;
@@ -76,13 +86,13 @@ public class ProdutoEntity {
         this.tipo = tipo;
     }
 
-    public boolean[] getDiasDaSemanaDisponivel() {
-        return diasDaSemanaDisponivel;
-    }
-
-    public void setDiasDaSemanaDisponivel(boolean[] diasDaSemanaDisponivel) {
-        this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
-    }
+//    public List<Boolean> getDiasDaSemanaDisponivel() {
+//        return diasDaSemanaDisponivel;
+//    }
+//
+//    public void setDiasDaSemanaDisponivel(List<Boolean> diasDaSemanaDisponivel) {
+//        this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
+//    }
 
     public LocalDate getDataInicial() {
         return dataInicial;

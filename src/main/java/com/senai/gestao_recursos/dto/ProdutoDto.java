@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class ProdutoDto {
 
@@ -15,7 +16,7 @@ public class ProdutoDto {
     @NotBlank
     private String tipo;
 
-    private boolean[] diasDaSemanaDisponivel = new boolean[6];
+    private List<Boolean> diasDaSemanaDisponivel;
 
     private LocalDate dataInicial;
 
@@ -28,7 +29,7 @@ public class ProdutoDto {
     public ProdutoDto() {
     }
 
-    public ProdutoDto(Long id, String descricao, String tipo, boolean[] diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
+    public ProdutoDto(Long id, String descricao, String tipo, List<Boolean> diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo;
@@ -63,11 +64,11 @@ public class ProdutoDto {
         this.tipo = tipo;
     }
 
-    public boolean[] getDiasDaSemanaDisponivel() {
+    public List<Boolean> getDiasDaSemanaDisponivel() {
         return diasDaSemanaDisponivel;
     }
 
-    public void setDiasDaSemanaDisponivel(boolean[] diasDaSemanaDisponivel) {
+    public void setDiasDaSemanaDisponivel(List<Boolean> diasDaSemanaDisponivel) {
         this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
     }
 
