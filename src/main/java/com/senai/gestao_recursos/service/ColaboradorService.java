@@ -5,6 +5,7 @@ import com.senai.gestao_recursos.entity.ColaboradorEntity;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,20 @@ public class ColaboradorService {
     }
 
     public void cadastrar(ColaboradorDto dto) {
+        LocalDate hoje = LocalDate.now();
+
+        if (dto.getDataNascimento().isAfter(hoje)) {
+            throw new IllegalArgumentException("A data de nascimento não pode ser futura. ");
+        }
+
+        if (dto.getDataNascimento().isBefore(hoje.minusYears(500))) {
+            throw new IllegalArgumentException("A data de nascimento não pode ser maior que 500 anos. ");
+        }
+
+        if (repository.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("Este e-mail já está cadastrado.");
+        }
+
         repository.save(toEntity(dto));
     }
 

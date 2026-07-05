@@ -7,18 +7,18 @@ import java.time.LocalDate;
 public class ColaboradorDto {
     private Long id;
 
-    @NotBlank(message = "Informe uma senha ")
+    @NotBlank(message = "O nome é obrigatório.")
     private String nome;
 
     @Email
     private String email;
 
-    @NotBlank(message = "Informe uma senha ")
+    @NotBlank(message = "A senha é obrigatória.")
     @Size(min = 5)
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter no mínimo 5 caracteres, conter números e letras")
     private String senha;
 
-    @NotBlank(message = "Informe o número da matrícula  ")
+    @NotBlank(message = "A matricula é obrigatória.")
     private String matricula;
 
     @PastOrPresent

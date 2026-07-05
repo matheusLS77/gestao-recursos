@@ -18,7 +18,7 @@ public class ColaboradorEntity {
     @Column
     private String email;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String senha;
 
     @Column
