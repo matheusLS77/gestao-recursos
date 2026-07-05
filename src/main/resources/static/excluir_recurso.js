@@ -11,7 +11,7 @@ document.querySelectorAll('.excluirRecurso').forEach(function(button) {
                 //console.log("id=" + id);
 
                 // Realize a chamada AJAX para excluir o recurso
-                fetch(`/recursolista/${id}`, {
+                fetch(`/recursosexcluir/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'

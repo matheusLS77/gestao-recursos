@@ -62,7 +62,7 @@ public class ColaboradorController {
         return "redirect:/colaboradorlista";
     }
 
-    @DeleteMapping("/colaboradores/{id}")
+    @DeleteMapping("/colaboradoresexcluir/{id}")
     public ResponseEntity<String> remover(@PathVariable Long id) {
         service.remover(id);
         return ResponseEntity.ok().body("Excluído ");

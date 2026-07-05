@@ -18,6 +18,10 @@ public class RecursoService {
     }
 
     public void cadastrar(RecursoDto dto){
+        if (dto.getDiasDaSemanaDisponivel() == null) {
+            dto.setDiasDaSemanaDisponivel(new ArrayList<>());
+        }
+
         RecursoEntity entity = paraEntity(dto);
 
         repository.save(entity);

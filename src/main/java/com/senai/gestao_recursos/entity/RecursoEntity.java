@@ -25,7 +25,13 @@ public class RecursoEntity {
     @Enumerated(EnumType.STRING)
     private TipoRecurso tipo;
 
-    @Column
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "recurso_dias_semana",
+            joinColumns = @JoinColumn(name = "recurso_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dia_semana")
     private List<DayOfWeek> diasDaSemanaDisponivel = new ArrayList<>();
 
     @Column

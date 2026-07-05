@@ -2,6 +2,7 @@ package com.senai.gestao_recursos.dto;
 
 import com.senai.gestao_recursos.enums.TipoRecurso;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class RecursoDto {
     @NotBlank(message = "A descrição é obrigatória.")
     private String descricao;
 
-    @NotBlank(message = "O tipo do recurso é obrigatório.")
+    @NotNull(message = "O tipo do recurso é obrigatório.")
     private TipoRecurso tipo;
 
     private List<DayOfWeek> diasDaSemanaDisponivel = new ArrayList<>();

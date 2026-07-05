@@ -35,7 +35,7 @@ public class RecursoController {
         return "redirect:/recursolista";
     }
 
-    @DeleteMapping("/recursos/{id}")
+    @DeleteMapping("/recursosexcluir/{id}")
     public ResponseEntity<String> remover(@PathVariable Long id) {
         recursoService.remover(id);
         return ResponseEntity.ok().body("Excluído ");
