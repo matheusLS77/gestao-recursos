@@ -31,7 +31,6 @@ public class ReservaController {
 
     @PostMapping("/reservas")
     public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
-
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
@@ -45,7 +44,7 @@ public class ReservaController {
         service.cadastrar(dto);
         redirectAttributes.addFlashAttribute("mensagem", "Reserva cadastrada com sucesso. ");
 
-        return "redirect:/reservas";
+        return "redirect:/reservalista";
     }
 
     @PostMapping("/reservascancelar")
