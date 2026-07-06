@@ -54,8 +54,7 @@
           <form th:action="@{/reservas}" th:object="${reserva}" method="post">
 
             <div class="mb-3">
-              <label class="form-label">Data</label>
-              <label>
+              <label class="form-label">Data</label><br><label>
                 <input type="date" class="form-control" th:field="*{data}" required>
               </label>
 
@@ -64,14 +63,15 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Hora Inicial</label>
-              <input type="time" class="form-control" th:field="*{horaInicial}" required>
+              <label class="form-label">Hora Inicial</label><br><label>
+                <input type="time" class="form-control" th:field="*{horaInicial}" required>
+              </label>
 
               <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaInicial')}" th:errors="*{horaInicial}"></div>
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Hora Final</label><label>
+              <label class="form-label">Hora Final</label><br><label>
               <input type="time" class="form-control" th:field="*{horaFinal}" required>
             </label>
 
