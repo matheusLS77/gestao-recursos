@@ -30,8 +30,7 @@ public class ReservaController {
     }
 
     @PostMapping("/reservas")
-    public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaDto dto,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -50,10 +49,7 @@ public class ReservaController {
     }
 
     @PostMapping("/reservascancelar")
-    public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto,
-                           BindingResult bindingResult,
-                           HttpSession session,
-                           RedirectAttributes redirectAttributes) {
+    public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -67,8 +63,7 @@ public class ReservaController {
 
         service.cancelar(dto);
 
-        redirectAttributes.addFlashAttribute("mensagem",
-                "Reserva cancelada com sucesso");
+        redirectAttributes.addFlashAttribute("mensagem", "Reserva cancelada com sucesso");
 
         return "redirect:/reservalista";
     }
