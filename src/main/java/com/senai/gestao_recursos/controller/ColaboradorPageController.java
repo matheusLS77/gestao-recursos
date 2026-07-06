@@ -38,6 +38,7 @@ public class ColaboradorPageController {
         }
 
         model.addAttribute("usuarioLogado", sessaoDto);
+        model.addAttribute("nomeColaborador", sessaoDto.getUsuarioNome());
         return "home";
     }
 

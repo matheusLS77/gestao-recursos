@@ -42,12 +42,37 @@
 </nav>
 
 <main class="container py-5">
-  <div class="p-5 mb-4 bg-light  rounded-3">
+  <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-3">
-      <h1 class="display-5 fw-bold alert alert-success" role="alert" th:if="${mensagem}" th:text="${mensagem}">Bem-vindo ao sistema</h1>
-       <a class="btn btn-primary btn-lg" th:href="@{/colaboradorlista}">Acessar colaboradores</a>
-       <a class="btn btn-primary btn-lg" th:href="@{/recursolista}">Acessar recursos</a>
-       <a class="btn btn-primary btn-lg" th:href="@{/reservalista}">Acessar reservas</a>
+      <div class="row align-items-center">
+
+        <div class="col-md-8">
+          <h1 class="display-5 fw-bold alert alert-success"
+              role="alert"
+              th:if="${mensagem}"
+              th:text="${mensagem}">
+            Bem-vindo ao sistema
+          </h1>
+
+          <h2 class="mb-4">O que deseja fazer hoje?</h2>
+
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" th:href="@{/colaboradorlista}">Acessar colaboradores</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/recursolista}">Acessar recursos</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/reservalista}">Acessar reservas</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 text-center">
+          <img
+                  src="https://static.vecteezy.com/system/resources/thumbnails/020/911/737/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
+                  alt="Logo"
+                  class="img-fluid"
+                  style="max-width: 220px;">
+          <h2 class="text" th:text="${nomeColaborador}">nomeColaborador</h2>
+        </div>
+
+      </div>
     </div>
   </div>
 </main>
