@@ -14,8 +14,8 @@ public class ColaboradorDto {
     private String email;
 
     @NotBlank(message = "A senha é obrigatória.")
-    @Size(min = 5)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter no mínimo 5 caracteres, conter números e letras")
+    @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter números e letras")
     private String senha;
 
     @NotBlank(message = "A matricula é obrigatória.")
