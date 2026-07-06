@@ -47,9 +47,8 @@ public class ReservaController {
         return "redirect:/reservalista";
     }
 
-    @PostMapping("/reservascancelar")
+    @PostMapping("/reservaatualizar")
     public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
-
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
@@ -57,11 +56,10 @@ public class ReservaController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "reservacancelar";
+            return "reservaatualizar";
         }
 
         service.cancelar(dto);
-
         redirectAttributes.addFlashAttribute("mensagem", "Reserva cancelada com sucesso");
 
         return "redirect:/reservalista";
