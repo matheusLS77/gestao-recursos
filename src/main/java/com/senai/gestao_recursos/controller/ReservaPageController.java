@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -58,19 +60,17 @@ public class ReservaPageController {
         return "reservalista";
     }
 
-    @GetMapping("/reservacancelar")
-    public String getCancelar(Model model, HttpSession session) {
+    @GetMapping("/reservaatualizar/{id}")
+    public String getCancelar(Model model, HttpSession session, @PathVariable Long id) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
             return "redirect:/login";
         }
 
-        ReservaDto reserva = new ReservaDto();
-
-        reserva.setDataCancelamento(LocalDate.now());
+        ReservaDto reserva = reservaService.obterReserva(id);
         model.addAttribute("reserva", reserva);
 
-        return "reservacancelar";
+        return "reservaatualizar";
     }
 }

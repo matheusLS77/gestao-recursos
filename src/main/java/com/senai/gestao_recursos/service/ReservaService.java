@@ -71,6 +71,18 @@ public class ReservaService {
         reservaRepository.deleteById(id);
     }
 
+    public ReservaDto obterReserva(Long id) {
+        Optional<ReservaEntity> reservaOP = reservaRepository.findById(id);
+
+        ReservaDto dto = new ReservaDto();
+
+        if (reservaOP.isPresent()) {
+            dto = paraDto(reservaOP.get());
+        }
+
+        return dto;
+    }
+
     public ReservaDto paraDto(ReservaEntity entity) {
         ReservaDto dto = new ReservaDto();
 
