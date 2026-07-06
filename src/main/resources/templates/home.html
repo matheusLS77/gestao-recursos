@@ -26,10 +26,8 @@
           <a class="nav-link text-light-emphasis" th:href="@{/colaboradorlista}">Colaboradores</a>
         </li>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-light-emphasis" th:href="@{/produtolista}">Produtos</a>
-        </li>
-        <li class="nav-item">
+
+         <li class="nav-item">
           <a class="nav-link text-light-emphasis" th:href="@{/recursolista}">Equipamentos</a>
         </li>
         <li class="nav-item">
@@ -46,9 +44,10 @@
 <main class="container py-5">
   <div class="p-5 mb-4 bg-light  rounded-3">
     <div class="container-fluid py-3">
-      <h1 class="display-5 fw-bold alert alert-success" role="alert" th:if="${messagem}" th:text="${messagem}">Bem-vindo ao sistema</h1>
-
-      <a class="btn btn-primary btn-lg" th:href="@{/usuarios}">Acessar usuários</a>
+      <h1 class="display-5 fw-bold alert alert-success" role="alert" th:if="${mensagem}" th:text="${mensagem}">Bem-vindo ao sistema</h1>
+       <a class="btn btn-primary btn-lg" th:href="@{/colaboradorlista}">Acessar colaboradores</a>
+       <a class="btn btn-primary btn-lg" th:href="@{/recursolista}">Acessar recursos</a>
+       <a class="btn btn-primary btn-lg" th:href="@{/reservalista}">Acessar reservas</a>
     </div>
   </div>
 </main>
