@@ -54,6 +54,22 @@
           <form th:action="@{/reservas}" th:object="${reserva}" method="post">
 
             <div class="mb-3">
+              <label class="form-label">ID Colaborador</label><br><label>
+              <input type="number" class="form-control" th:field="*{colaboradorId}" required>
+            </label>
+
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('colaboradorId')}" th:errors="*{colaboradorId}"></div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">ID Recurso</label><br><label>
+              <input type="number" class="form-control" th:field="*{recursoId}" required>
+            </label>
+
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('recursoId')}" th:errors="*{recursoId}"></div>
+            </div>
+
+            <div class="mb-3">
               <label class="form-label">Data</label><br><label>
                 <input type="date" class="form-control" th:field="*{data}" required>
               </label>
