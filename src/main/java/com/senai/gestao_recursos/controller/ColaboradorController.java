@@ -66,6 +66,26 @@ public class ColaboradorController {
         return "redirect:/colaboradorlista";
     }
 
+    @PostMapping("/colaboradoratualizar")
+    public String atualizarrColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
+                                       BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "colaboradoratualizar";
+        }
+
+        service.atualizar(dto);
+        redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso ");
+
+        return "redirect:/colaboradorlista";
+    }
+
     @DeleteMapping("/colaboradoresexcluir/{id}")
     public ResponseEntity<String> remover(@PathVariable Long id, HttpSession session) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);

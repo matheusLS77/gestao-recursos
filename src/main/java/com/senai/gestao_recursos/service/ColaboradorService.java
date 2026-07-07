@@ -59,6 +59,14 @@ public class ColaboradorService {
     }
 
     public void atualizar(ColaboradorDto dto) {
+        List<ColaboradorEntity> colaboradores = repository.findAll();
+
+        for (ColaboradorEntity colaborador : colaboradores) {
+            if (dto.getEmail().equals(colaborador.getEmail())) {
+                throw new IllegalArgumentException("Email já cadastrado. ");
+            }
+        }
+
         Optional<ColaboradorEntity> colaboradorOp = repository.findById(dto.getId());
 
         if (colaboradorOp.isPresent()) {
@@ -76,6 +84,17 @@ public class ColaboradorService {
 
     public void remover(Long id) {
         repository.deleteById(id);
+    }
+
+    public ColaboradorDto obterColaborador(Long id) {
+        Optional<ColaboradorEntity> colabodorOp = repository.findById(id);
+
+        ColaboradorDto colaborador = new ColaboradorDto();
+        if (colabodorOp.isPresent()) {
+            colaborador = paraDto(colabodorOp.get());
+        }
+
+        return colaborador;
     }
 
     public ColaboradorDto paraDto(ColaboradorEntity entity) {

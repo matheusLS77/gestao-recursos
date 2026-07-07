@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -53,6 +54,20 @@ public class ColaboradorPageController {
         model.addAttribute("colaborador", new ColaboradorDto());
 
         return "colaboradorcadastrar";
+    }
+
+    @GetMapping("/colaboradoratualizar/{id}")
+    public String getAtualizar(Model model, HttpSession session, @PathVariable Long id) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        ColaboradorDto colaborador = colaboradorService.obterColaborador(id);
+        model.addAttribute("colaborador", colaborador);
+
+        return "colaboradoratualizar";
     }
 
     @GetMapping("/colaboradorlista")
