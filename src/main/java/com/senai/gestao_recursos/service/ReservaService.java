@@ -33,6 +33,14 @@ public class ReservaService {
         RecursoEntity recurso = recursoRepository.findById(dto.getRecursoId())
                 .orElseThrow(() -> new RuntimeException("Recurso não existe"));
 
+        boolean recursoDisponivel = reservaRepository.existsByRecursoIdAndDataAndHoraInicialLessThanEqualAndHoraFinalGreaterThanEqual(
+                dto.getRecursoId(), dto.getData(), dto.getHoraFinal(), dto.getHoraInicial()
+        );
+
+        if (!recursoDisponivel) {
+            throw new IllegalArgumentException("Este recurso já está reservado nesse horário!");
+        }
+
         reservaRepository.save(paraEntity(dto, colaborador, recurso));
     }
 
