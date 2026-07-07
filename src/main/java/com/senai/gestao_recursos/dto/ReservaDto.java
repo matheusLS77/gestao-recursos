@@ -99,19 +99,19 @@ public class ReservaDto {
         this.motivoCancelamento = motivoCancelamento;
     }
 
-//    public String getColaboradorNome() {
-//        return colaboradorNome;
-//    }
-//
-//    public void setColaboradorNome(String colaboradorNome) {
-//        this.colaboradorNome = colaboradorNome;
-//    }
-//
-//    public String getRecursoDescricao() {
-//        return recursoDescricao;
-//    }
-//
-//    public void setRecursoDescricao(String recursoDescricao) {
-//        this.recursoDescricao = recursoDescricao;
-//    }
+    public String getColaboradorNome() {
+        return colaboradorNome;
+    }
+
+    public void setColaboradorNome(String colaboradorNome) {
+        this.colaboradorNome = colaboradorNome;
+    }
+
+    public String getRecursoDescricao() {
+        return recursoDescricao;
+    }
+
+    public void setRecursoDescricao(String recursoDescricao) {
+        this.recursoDescricao = recursoDescricao;
+    }
 }
