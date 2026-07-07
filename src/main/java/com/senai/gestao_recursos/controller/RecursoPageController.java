@@ -1,24 +1,27 @@
 package com.senai.gestao_recursos.controller;
 
+import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.dto.RecursoDto;
 import com.senai.gestao_recursos.entity.RecursoEntity;
 import com.senai.gestao_recursos.repository.RecursoRepository;
+import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @Controller
 public class RecursoPageController {
 
-    private final RecursoRepository recursoRepository;
+    private final RecursoService recursoService;
 
-    public RecursoPageController(RecursoRepository recursoRepository) {
-        this.recursoRepository = recursoRepository;
+    public RecursoPageController(RecursoService recursoService) {
+        this.recursoService = recursoService;
     }
 
     @GetMapping("/recursocadastrar")
@@ -34,6 +37,20 @@ public class RecursoPageController {
         return "recursocadastrar";
     }
 
+    @GetMapping("/recursoatualizar/{id}")
+    public String getAtualizar(Model model, HttpSession session, @PathVariable Long id) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        RecursoDto recurso = recursoService.obterRecurso(id);
+        model.addAttribute("recurso", recurso);
+
+        return "recursoatualizar";
+    }
+
     @GetMapping("/recursolista")
     public String getRecursos(Model model, HttpSession session) {
         SessaoDto sessaoDto = SessaoUtil.obterSessao(session);
@@ -42,7 +59,7 @@ public class RecursoPageController {
             return "redirect:/login";
         }
 
-        List<RecursoEntity> recursos = recursoRepository.findAll();
+        List<RecursoDto> recursos = recursoService.listar();
 
         model.addAttribute("recursos", recursos);
 

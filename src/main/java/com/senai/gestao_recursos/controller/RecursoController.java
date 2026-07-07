@@ -1,5 +1,6 @@
 package com.senai.gestao_recursos.controller;
 
+import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.dto.RecursoDto;
 import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
@@ -41,6 +42,26 @@ public class RecursoController {
 
         recursoService.cadastrar(dto);
         redirectAttributes.addFlashAttribute("mensagem", "Recurso cadastrado com sucesso ");
+
+        return "redirect:/recursolista";
+    }
+
+    @PostMapping("/recursoatualizar")
+    public String atualizarRecurso(@Valid @ModelAttribute("recurso") RecursoDto dto,
+                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "recursoatualizar";
+        }
+
+        recursoService.atualizar(dto);
+        redirectAttributes.addFlashAttribute("mensagem", "Recurso atualizado com sucesso ");
 
         return "redirect:/recursolista";
     }

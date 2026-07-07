@@ -59,6 +59,18 @@ public class RecursoService {
         repository.deleteById(id);
     }
 
+    public RecursoDto obterRecurso(Long id) {
+        Optional<RecursoEntity> recursoOp = repository.findById(id);
+
+        RecursoDto recurso = new RecursoDto();
+
+        if (recursoOp.isPresent()) {
+            recurso = paraDto(recursoOp.get());
+        }
+
+        return recurso;
+    }
+
     public RecursoEntity paraEntity(RecursoDto dto){
         RecursoEntity entity = new RecursoEntity();
 

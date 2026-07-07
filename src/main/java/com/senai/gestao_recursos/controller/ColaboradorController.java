@@ -67,7 +67,7 @@ public class ColaboradorController {
     }
 
     @PostMapping("/colaboradoratualizar")
-    public String atualizarrColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
+    public String atualizarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
