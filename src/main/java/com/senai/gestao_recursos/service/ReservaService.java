@@ -80,8 +80,8 @@ public class ReservaService {
         dto.setData(entity.getData());
         dto.setHoraInicial(entity.getHoraInicial());
         dto.setHoraFinal(entity.getHoraFinal());
-        dto.setColaboradorNome(entity.getColaborador().getNome());
-        dto.setRecursoDescricao(entity.getRecurso().getDescricao());
+//        dto.setColaboradorNome(entity.getColaborador().getNome());
+//        dto.setRecursoDescricao(entity.getRecurso().getDescricao());
 
         return dto;
     }
