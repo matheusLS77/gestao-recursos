@@ -59,13 +59,15 @@ public class ColaboradorService {
     }
 
     public void atualizar(ColaboradorDto dto) {
-        List<ColaboradorEntity> colaboradores = repository.findAll();
-
-        for (ColaboradorEntity colaborador : colaboradores) {
-            if (dto.getEmail().equals(colaborador.getEmail())) {
-                throw new IllegalArgumentException("Email já cadastrado. ");
-            }
-        }
+//        List<ColaboradorEntity> colaboradores = repository.findAll();
+//
+//        for (ColaboradorEntity colaborador : colaboradores) {
+//            if (dto.getEmail().equals(colaborador.getEmail())) {
+//                if (!dto.getMatricula().equals(colaborador.getMatricula())) {
+//                    throw new IllegalArgumentException("Email já cadastrado. ");
+//                }
+//            }
+//        }
 
         Optional<ColaboradorEntity> colaboradorOp = repository.findById(dto.getId());
 
