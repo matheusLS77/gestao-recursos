@@ -1,10 +1,6 @@
 package com.senai.gestao_recursos.controller;
 
-import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
-import com.senai.gestao_recursos.repository.ColaboradorRepository;
-import com.senai.gestao_recursos.repository.ReservaRepository;
-import com.senai.gestao_recursos.service.ColaboradorService;
 import com.senai.gestao_recursos.service.ReservaService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
@@ -47,8 +43,9 @@ public class ReservaController {
         return "redirect:/reservalista";
     }
 
-    @PostMapping("/reservaatualizar")
-    public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, HttpSession session, RedirectAttributes redirectAttributes) {
+    @PostMapping("/reservacancelar")
+    public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, HttpSession session,
+                           RedirectAttributes redirectAttributes, Model model) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
@@ -56,10 +53,17 @@ public class ReservaController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "reservaatualizar";
+            model.addAttribute("reserva", dto);
+            return "reservacancelar";
         }
 
-        service.cancelar(dto);
+        try {
+            service.cancelar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "reservacancelar";
+        }
+
         redirectAttributes.addFlashAttribute("mensagem", "Reserva cancelada com sucesso");
 
         return "redirect:/reservalista";

@@ -26,7 +26,6 @@ public class ReservaDto {
 
     private LocalDate dataCancelamento;
 
-    @NotBlank(message = "Motivo do cancelamento é obrigatório")
     private String motivoCancelamento;
 
     private String colaboradorNome;

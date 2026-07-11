@@ -58,11 +58,15 @@ public class ReservaService {
         Optional<ReservaEntity> reservaOp = reservaRepository.findById(dto.getId());
 
         if (dto.getDataCancelamento() != null) {
-            throw new RuntimeException("Reserva já cancelada. ");
+            throw new IllegalArgumentException ("Reserva já cancelada. ");
         }
 
         if (LocalDate.now().isAfter(dto.getData().minusDays(1))) {
-            throw new RuntimeException("Cancelamento só até 1 dia antes. ");
+            throw new IllegalArgumentException ("Cancelamento só até 1 dia antes. ");
+        }
+
+        if (dto.getMotivoCancelamento() == null || dto.getMotivoCancelamento().isEmpty()) {
+            throw new IllegalArgumentException ("Motivo do cancelamento é obrigatório. ");
         }
 
         if (reservaOp.isPresent()) {

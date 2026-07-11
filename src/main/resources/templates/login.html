@@ -21,17 +21,16 @@
       <div class="card w-100 border-0 outline-0" style="max-width: 450px;">
         <div class="card-body rounded-5 p-4 border-0">
 
-          <h1 class="h4 text-center mb-5 mt-3">Gestão de Recursos</h1>
+          <h1 class="h4 text-center mb-5 mt-3 fw-bold">Gestão de Recursos</h1>
           <div class="alert alert-danger" role="alert" th:if="${erro}" th:text="${erro}">E-mail ou senha inválidos.</div>
 
           <form th:action="@{/login}" method="post">
 
-            <div class="form-floating mb-3 input-icon">
+            <div class="form-floating mb-2 input-icon">
               <img th:src="@{/images/icone-usuario.png}" class="input-icon-img" alt="">
 
               <input type="email" class="form-control" id="email" name="email"
                      th:value="${email}" placeholder=" " required>
-
               <label for="email">E-mail</label>
             </div>
 
@@ -40,7 +39,6 @@
 
               <input type="password" class="form-control" id="senha" name="senha"
                      placeholder=" " required>
-
               <label for="senha">Senha</label>
             </div>
 

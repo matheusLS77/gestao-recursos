@@ -1,7 +1,5 @@
 package com.senai.gestao_recursos.controller;
 
-import com.senai.gestao_recursos.dto.ColaboradorDto;
-import com.senai.gestao_recursos.dto.RecursoDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.service.ColaboradorService;
 import com.senai.gestao_recursos.service.RecursoService;
@@ -13,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -60,6 +56,20 @@ public class ReservaPageController {
         return "reservalista";
     }
 
+    @GetMapping("/reservavisualizar/{id}")
+    public String getVisualizar(Model model, HttpSession session, @PathVariable Long id) {
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        ReservaDto reserva = reservaService.obterReserva(id);
+        model.addAttribute("reserva", reserva);
+
+        return "reservavisualizar";
+    }
+
     @GetMapping("/reservaatualizar/{id}")
     public String getCancelar(Model model, HttpSession session, @PathVariable Long id) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
@@ -71,6 +81,6 @@ public class ReservaPageController {
         ReservaDto reserva = reservaService.obterReserva(id);
         model.addAttribute("reserva", reserva);
 
-        return "reservaatualizar";
+        return "reservacancelar";
     }
 }
