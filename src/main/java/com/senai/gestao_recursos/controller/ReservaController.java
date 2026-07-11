@@ -1,5 +1,6 @@
 package com.senai.gestao_recursos.controller;
 
+import com.senai.gestao_recursos.dto.CancelamentoDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.service.ReservaService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
@@ -51,7 +52,7 @@ public class ReservaController {
     }
 
     @PostMapping("/reservacancelar")
-    public String cancelar(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, HttpSession session,
+    public String cancelar(@Valid @ModelAttribute("reserva") CancelamentoDto dto, BindingResult bindingResult, HttpSession session,
                            RedirectAttributes redirectAttributes, Model model) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -60,7 +61,6 @@ public class ReservaController {
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("reserva", dto);
             return "reservacancelar";
         }
 

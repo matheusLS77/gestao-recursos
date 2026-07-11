@@ -1,5 +1,6 @@
 package com.senai.gestao_recursos.service;
 
+import com.senai.gestao_recursos.dto.CancelamentoDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.entity.ColaboradorEntity;
 import com.senai.gestao_recursos.entity.RecursoEntity;
@@ -54,29 +55,22 @@ public class ReservaService {
         return reservaDtos;
     }
 
-    public void cancelar(ReservaDto dto) {
-        Optional<ReservaEntity> reservaOp = reservaRepository.findById(dto.getId());
+    public void cancelar(CancelamentoDto dto) {
+        ReservaEntity reserva = reservaRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Reserva não encontrada"));
 
-        if (dto.getDataCancelamento() != null) {
-            throw new IllegalArgumentException ("Reserva já cancelada. ");
+        if (reserva.getDataCancelamento() != null) {
+            throw new IllegalArgumentException("Reserva já cancelada.");
         }
 
-        if (LocalDate.now().isAfter(dto.getData().minusDays(1))) {
-            throw new IllegalArgumentException ("Cancelamento só até 1 dia antes. ");
+        if (LocalDate.now().isAfter(reserva.getData().minusDays(1))) {
+            throw new IllegalArgumentException("Cancelamento só até 1 dia antes.");
         }
 
-        if (dto.getMotivoCancelamento() == null || dto.getMotivoCancelamento().isEmpty()) {
-            throw new IllegalArgumentException ("Motivo do cancelamento é obrigatório. ");
-        }
+        reserva.setDataCancelamento(LocalDate.now());
+        reserva.setMotivoCancelamento(dto.getMotivoCancelamento());
 
-        if (reservaOp.isPresent()) {
-            ReservaEntity reserva = reservaOp.get();
-
-            reserva.setDataCancelamento(LocalDate.now());
-            reserva.setMotivoCancelamento(dto.getMotivoCancelamento());
-
-            reservaRepository.save(reserva);
-        }
+        reservaRepository.save(reserva);
     }
 
     public void remover(Long id) {
@@ -106,6 +100,8 @@ public class ReservaService {
         dto.setHoraFinal(entity.getHoraFinal());
         dto.setColaboradorNome(entity.getColaborador().getNome());
         dto.setRecursoDescricao(entity.getRecurso().getDescricao());
+        dto.setDataCancelamento(entity.getDataCancelamento());
+        dto.setMotivoCancelamento(entity.getMotivoCancelamento());
 
         return dto;
     }

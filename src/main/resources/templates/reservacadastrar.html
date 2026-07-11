@@ -59,7 +59,7 @@
             <div class="mb-3">
               <label for="colaboradorId" class="form-label fw-medium">Colaborador</label>
               <select class="form-select" id="colaboradorId" th:field="*{colaboradorId}" required>
-                <option value="">Escolha o recurso</option>
+                <option value="">Escolha o colaborador</option>
                 <option th:each="colaborador : ${colaboradores}"
                         th:value="${colaborador.id}"
                         th:text="${colaborador.nome}">

@@ -1,5 +1,6 @@
 package com.senai.gestao_recursos.controller;
 
+import com.senai.gestao_recursos.dto.CancelamentoDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.service.ColaboradorService;
 import com.senai.gestao_recursos.service.RecursoService;
@@ -78,7 +79,8 @@ public class ReservaPageController {
             return "redirect:/login";
         }
 
-        ReservaDto reserva = reservaService.obterReserva(id);
+        CancelamentoDto reserva = new CancelamentoDto();
+        reserva.setId(id);
         model.addAttribute("reserva", reserva);
 
         return "reservacancelar";
