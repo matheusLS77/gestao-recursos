@@ -2,7 +2,9 @@ package com.senai.gestao_recursos.service;
 
 import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.entity.ColaboradorEntity;
+import com.senai.gestao_recursos.entity.ReservaEntity;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
+import com.senai.gestao_recursos.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,9 +15,11 @@ import java.util.Optional;
 @Service
 public class ColaboradorService {
     private final ColaboradorRepository repository;
+    private final ReservaRepository reservaRepository;
 
-    public ColaboradorService(ColaboradorRepository repository) {
+    public ColaboradorService(ColaboradorRepository repository, ReservaRepository reservaRepository) {
         this.repository = repository;
+        this.reservaRepository = reservaRepository;
     }
 
     public void cadastrar(ColaboradorDto dto) {
@@ -79,6 +83,12 @@ public class ColaboradorService {
     }
 
     public void remover(Long id) {
+        List<ReservaEntity> reservas = reservaRepository.findByColaboradorId(id);
+
+        if (!reservas.isEmpty()) {
+            throw new IllegalArgumentException("Não é possível excluir o colaborador pois existem reservas vinculadas.");
+        }
+
         repository.deleteById(id);
     }
 

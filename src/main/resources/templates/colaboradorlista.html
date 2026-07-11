@@ -56,6 +56,7 @@
 
     <div class="card shadow-sm card shadow-sm rounded-3 overflow-hidden border-0 outline-0">
         <div class="card-body p-0">
+            <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
             <div class="table-responsive">
                 <table class="table table-striped align-middle mb-0">
                     <thead class="table-primary">

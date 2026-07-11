@@ -26,8 +26,8 @@ document.querySelectorAll('.excluir').forEach(function(button) {
                             linha.remove();
                         } else {
                             // A solicitação DELETE falhou
-                            console.error('Erro ao excluir colaborador.');
-                            alert('Erro ao excluir colaborador');
+                            console.error('Colaborador possui reserva cadastrada.');
+                            alert('Colaborador possui reserva cadastrada.');
                         }
                     })
                     .catch(error => {

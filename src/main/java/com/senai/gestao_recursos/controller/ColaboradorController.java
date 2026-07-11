@@ -1,7 +1,6 @@
 package com.senai.gestao_recursos.controller;
 
 import com.senai.gestao_recursos.dto.ColaboradorDto;
-import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import com.senai.gestao_recursos.service.ColaboradorService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
@@ -99,14 +98,19 @@ public class ColaboradorController {
     }
 
     @DeleteMapping("/colaboradoresexcluir/{id}")
-    public ResponseEntity<String> remover(@PathVariable Long id, HttpSession session) {
+    public ResponseEntity<String> remover(@PathVariable Long id, HttpSession session, Model model) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso não autorizado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso não autorizado.");
         }
 
-        service.remover(id);
-        return ResponseEntity.ok().body("Excluído ");
+        try {
+            service.remover(id);
+            return ResponseEntity.ok("Colaborador excluído com sucesso.");
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

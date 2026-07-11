@@ -67,6 +67,10 @@ public class ReservaService {
             throw new IllegalArgumentException("Cancelamento só até 1 dia antes.");
         }
 
+        if (dto.getMotivoCancelamento() == null || dto.getMotivoCancelamento().isBlank()) {
+            throw new IllegalArgumentException("Motivo do cancelamento é obrigatório.");
+        }
+
         reserva.setDataCancelamento(LocalDate.now());
         reserva.setMotivoCancelamento(dto.getMotivoCancelamento());
 
@@ -83,7 +87,11 @@ public class ReservaService {
         ReservaDto dto = new ReservaDto();
 
         if (reservaOP.isPresent()) {
-            dto = paraDto(reservaOP.get());
+            ReservaEntity reserva = reservaOP.get();
+
+            dto = paraDto(reserva);
+            dto.setDataCancelamento(reserva.getDataCancelamento());
+            dto.setMotivoCancelamento(reserva.getMotivoCancelamento());
         }
 
         return dto;
@@ -100,8 +108,6 @@ public class ReservaService {
         dto.setHoraFinal(entity.getHoraFinal());
         dto.setColaboradorNome(entity.getColaborador().getNome());
         dto.setRecursoDescricao(entity.getRecurso().getDescricao());
-        dto.setDataCancelamento(entity.getDataCancelamento());
-        dto.setMotivoCancelamento(entity.getMotivoCancelamento());
 
         return dto;
     }
