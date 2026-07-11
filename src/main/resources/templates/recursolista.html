@@ -80,8 +80,7 @@
 
                         <td>
                 <span th:each="dia, stat : ${recurso.diasDaSemanaDisponivel}">
-                    <span th:text="${dia}"></span><span th:if="${!stat.last}">, </span>
-                </span>
+                    <span th:text="${dia}"></span><span th:if="${!stat.last}">, </span></span>
                         </td>
 
                         <td th:text="${recurso.dataInicialAgendamento}"></td>
@@ -90,15 +89,8 @@
                         <td th:text="${recurso.horaFinalAgendamento}"></td>
 
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-primary me-1"
-                               th:href="@{/recursoatualizar/{id}(id=${recurso.id})}">
-                                Editar
-                            </a>
-
-                            <button class="btn btn-sm btn-outline-danger excluirRecurso"
-                                    th:data-id="${recurso.id}">
-                                Excluir
-                            </button>
+                            <a class="btn btn-sm btn-primary me-1" th:href="@{/recursoatualizar/{id}(id=${recurso.id})}">Editar</a>
+                            <button class="btn btn-sm btn-danger excluirRecurso" th:data-id="${recurso.id}"> Excluir </button>
                         </td>
                     </tr>
 

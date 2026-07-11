@@ -76,8 +76,8 @@
                         <td th:text="${colaborador.dataNascimento}">9/9/1999</td>
 
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-primary me-1" th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">Editar</a>
-                            <button th:data-id="${colaborador.id}" class="excluir btn btn-sm btn-outline-danger">Excluir</button>
+                            <a class="btn btn-sm btn-primary me-1" th:href="@{/colaboradoratualizar/{id}(id=${colaborador.id})}">Editar</a>
+                            <button th:data-id="${colaborador.id}" class="excluir btn btn-sm btn-danger">Excluir</button>
                         </td>
                     </tr>
 
