@@ -26,7 +26,8 @@ public class ReservaController {
     }
 
     @PostMapping("/reservas")
-    public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String cadastrarReserva(@Valid @ModelAttribute("reserva") ReservaDto dto, BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes, HttpSession session, Model model) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
@@ -37,7 +38,13 @@ public class ReservaController {
             return "reservacadastrar";
         }
 
-        service.cadastrar(dto);
+        try {
+            service.cadastrar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "reservacadastrar";
+        }
+
         redirectAttributes.addFlashAttribute("mensagem", "Reserva cadastrada com sucesso. ");
 
         return "redirect:/reservalista";

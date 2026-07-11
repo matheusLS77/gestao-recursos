@@ -70,7 +70,7 @@ public class ReservaPageController {
         return "reservavisualizar";
     }
 
-    @GetMapping("/reservaatualizar/{id}")
+    @GetMapping("/reservacancelar/{id}")
     public String getCancelar(Model model, HttpSession session, @PathVariable Long id) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
