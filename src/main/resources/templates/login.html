@@ -26,14 +26,22 @@
 
           <form th:action="@{/login}" method="post">
 
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="email" name="email" th:value="${email}" placeholder=" " required>
-              <label for="email"><img th:src="@{/images/icone-usuario.png}" class="label-icon" alt="Ícone de usuário"/> E-mail</label>
+            <div class="form-floating mb-3 input-icon">
+              <img th:src="@{/images/icone-usuario.png}" class="input-icon-img" alt="">
+
+              <input type="email" class="form-control" id="email" name="email"
+                     th:value="${email}" placeholder=" " required>
+
+              <label for="email">E-mail</label>
             </div>
 
-            <div class="form-floating mb-3">
-              <input type="password" class="form-control mb-2" id="senha" name="senha" placeholder=" " required>
-              <label for="senha"><img th:src="@{/images/icone-de-cadeado.png}" class="label-icon" alt="Ícone de senha"/> Senha</label>
+            <div class="form-floating mb-3 input-icon">
+              <img th:src="@{/images/icone-de-cadeado.png}" class="input-icon-img" alt="">
+
+              <input type="password" class="form-control" id="senha" name="senha"
+                     placeholder=" " required>
+
+              <label for="senha">Senha</label>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 mt-5 mb-3">Entrar</button>
