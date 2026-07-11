@@ -48,7 +48,7 @@ public class ColaboradorController {
 
     @PostMapping("/colaboradores")
     public String cadastrarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -60,15 +60,21 @@ public class ColaboradorController {
             return "colaboradorcadastrar";
         }
 
-        service.cadastrar(dto);
-        redirectAttributes.addFlashAttribute("mensagem", "Colaborador cadastrado com sucesso ");
+        try {
+            service.cadastrar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "colaboradorcadastrar";
+        }
+
+        redirectAttributes.addFlashAttribute("mensagem", "Colaborador cadastrado com sucesso.");
 
         return "redirect:/colaboradorlista";
     }
 
     @PostMapping("/colaboradoratualizar")
     public String atualizarColaborador(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
-                                       BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+                                       BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -80,7 +86,13 @@ public class ColaboradorController {
             return "colaboradoratualizar";
         }
 
-        service.atualizar(dto);
+        try {
+            service.atualizar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "colaboradoratualizar";
+        }
+
         redirectAttributes.addFlashAttribute("mensagem", "Colaborador atualizado com sucesso ");
 
         return "redirect:/colaboradorlista";

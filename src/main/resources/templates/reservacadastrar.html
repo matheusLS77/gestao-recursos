@@ -51,8 +51,9 @@
 
       <div class="card shadow-sm">
         <div class="card-body">
-          <form th:action="@{/reservas}" th:object="${reserva}" method="post">
+          <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
 
+          <form th:action="@{/reservas}" th:object="${reserva}" method="post">
             <div class="mb-3">
               <label class="form-label">ID Colaborador</label><br><label>
               <input type="number" class="form-control" th:field="*{colaboradorId}" required>

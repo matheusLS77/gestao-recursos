@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ColaboradorRepository extends JpaRepository<ColaboradorEntity, Long> {
     Optional<ColaboradorEntity> findByEmailAndSenha(String email, String senha);
+    Optional<ColaboradorEntity> findByEmail(String email);
     boolean existsByEmail(String email);
 
 }

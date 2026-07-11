@@ -51,6 +51,7 @@
 
       <div class="card shadow-sm">
         <div class="card-body">
+          <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
           <form th:action="@{/colaboradores}" th:object="${colaborador}" method="post">
             <div class="mb-3">
               <label for="nome" class="form-label">Nome</label>

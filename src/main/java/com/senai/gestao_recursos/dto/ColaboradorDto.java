@@ -7,21 +7,22 @@ import java.time.LocalDate;
 public class ColaboradorDto {
     private Long id;
 
-    @NotBlank(message = "O nome é obrigatório.")
+    @NotBlank(message = "O nome é obrigatório ")
     private String nome;
 
     @Email
     private String email;
 
-    @NotBlank(message = "A senha é obrigatória.")
-    @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter números e letras")
+    @NotBlank(message = "A senha é obrigatória ")
+    @Size(min = 5, message = "A senha deve ter no mínimo 5 caracteres ")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "A senha deve ter números e letras ")
     private String senha;
 
-    @NotBlank(message = "A matricula é obrigatória.")
+    @NotBlank(message = "A matricula é obrigatória ")
     private String matricula;
 
-    @PastOrPresent
+    @NotNull(message = "A data de nascimento é obrigatória ")
+    @PastOrPresent(message = "A data de nascimento não pode ser futura ")
     private LocalDate dataNascimento;
 
     public ColaboradorDto() {

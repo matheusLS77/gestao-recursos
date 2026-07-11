@@ -21,16 +21,12 @@ public class ColaboradorService {
     public void cadastrar(ColaboradorDto dto) {
         LocalDate hoje = LocalDate.now();
 
-        if (dto.getDataNascimento().isAfter(hoje)) {
-            throw new IllegalArgumentException("A data de nascimento não pode ser futura. ");
-        }
-
         if (dto.getDataNascimento().isBefore(hoje.minusYears(500))) {
-            throw new IllegalArgumentException("A data de nascimento não pode ser maior que 500 anos. ");
+            throw new IllegalArgumentException("A data de nascimento não pode ser anterior a 500 anos ");
         }
 
         if (repository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Este e-mail já está cadastrado.");
+            throw new IllegalArgumentException("E-mail já cadastrado ");
         }
 
         repository.save(paraEntity(dto));
@@ -59,15 +55,13 @@ public class ColaboradorService {
     }
 
     public void atualizar(ColaboradorDto dto) {
-//        List<ColaboradorEntity> colaboradores = repository.findAll();
-//
-//        for (ColaboradorEntity colaborador : colaboradores) {
-//            if (dto.getEmail().equals(colaborador.getEmail())) {
-//                if (!dto.getMatricula().equals(colaborador.getMatricula())) {
-//                    throw new IllegalArgumentException("Email já cadastrado. ");
-//                }
-//            }
-//        }
+        Optional<ColaboradorEntity> colaboradorExistente = repository.findByEmail(dto.getEmail());
+
+        if (colaboradorExistente.isPresent()) {
+            if (colaboradorExistente.get().getEmail().equals(dto.getEmail()) && !colaboradorExistente.get().getId().equals(dto.getId())) {
+                throw new IllegalArgumentException("E-mail já cadastrado ");
+            }
+        }
 
         Optional<ColaboradorEntity> colaboradorOp = repository.findById(dto.getId());
 

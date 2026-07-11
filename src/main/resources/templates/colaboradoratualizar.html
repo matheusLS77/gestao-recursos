@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cadastro de Colaborador</title>
+  <title>Atualização de Colaborador</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -44,13 +44,14 @@
     <div class="col-12 col-lg-8">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <h1 class="h3 mb-1">Cadastrar colaborador</h1>
-          <p class="text-secondary mb-0">Preencha os dados para cadastrar um novo colaborador.</p>
+          <h1 class="h3 mb-1">Atualizar colaborador</h1>
+          <p class="text-secondary mb-0">Preencha os dados para atualizar o colaborador.</p>
         </div>
       </div>
 
       <div class="card shadow-sm">
         <div class="card-body">
+          <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
           <form th:action="@{/colaboradoratualizar}" th:object="${colaborador}" method="post">
             <input type="hidden" th:field="*{id}">
 
