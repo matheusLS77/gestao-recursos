@@ -104,6 +104,12 @@
               <div class="text-danger small mt-1" th:if="${#fields.hasErrors('motivoCancelamento')}" th:errors="*{motivoCancelamento}">Erro no motivo do cancelamento</div>
             </div>
 
+            <div class="mb-3">
+              <label for="retirada" class="form-label fw-medium">Local de Retirada</label>
+              <input type="text" class="form-control" id="retirada" th:field="*{retiradaEndereco}" placeholder=" - " readonly>
+              <div class="text-danger small mt-1" th:if="${#fields.hasErrors('retiradaEndereco')}" th:errors="*{retiradaEndereco}">Erro no local de retirada</div>
+            </div>
+
             <div class="d-flex justify-content-end gap-2">
               <a class="btn btn-primary" th:href="@{/reservalista}">Voltar</a>
             </div>

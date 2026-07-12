@@ -5,6 +5,7 @@ import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.service.ColaboradorService;
 import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.service.ReservaService;
+import com.senai.gestao_recursos.service.RetiradaService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
@@ -20,11 +21,13 @@ public class ReservaPageController {
     private final ReservaService reservaService;
     private final RecursoService recursoService;
     private final ColaboradorService colaboradorService;
+    private final RetiradaService retiradaService;
 
-    public ReservaPageController(ReservaService reservaService, RecursoService recursoService, ColaboradorService colaboradorService) {
+    public ReservaPageController(ReservaService reservaService, RecursoService recursoService, ColaboradorService colaboradorService, RetiradaService retiradaService) {
         this.reservaService = reservaService;
         this.recursoService = recursoService;
         this.colaboradorService = colaboradorService;
+        this.retiradaService = retiradaService;
     }
 
 
@@ -37,8 +40,10 @@ public class ReservaPageController {
         }
 
         model.addAttribute("reserva", new ReservaDto());
+
         model.addAttribute("colaboradores", colaboradorService.listar());
         model.addAttribute("recursos", recursoService.listar());
+        model.addAttribute("retiradas", retiradaService.listar());
 
         return "reservacadastrar";
     }

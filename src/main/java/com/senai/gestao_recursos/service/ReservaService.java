@@ -5,9 +5,11 @@ import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.entity.ColaboradorEntity;
 import com.senai.gestao_recursos.entity.RecursoEntity;
 import com.senai.gestao_recursos.entity.ReservaEntity;
+import com.senai.gestao_recursos.entity.RetiradaEntity;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import com.senai.gestao_recursos.repository.RecursoRepository;
 import com.senai.gestao_recursos.repository.ReservaRepository;
+import com.senai.gestao_recursos.repository.RetiradaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,11 +22,13 @@ public class ReservaService {
     private final RecursoRepository recursoRepository;
     private final ColaboradorRepository colaboradorRepository;
     private final ReservaRepository reservaRepository;
+    private final RetiradaRepository retiradaRepository;
 
-    public ReservaService(RecursoRepository repository, ColaboradorRepository colaboradorRepository, ReservaRepository reservaRepository) {
+    public ReservaService(RecursoRepository repository, ColaboradorRepository colaboradorRepository, ReservaRepository reservaRepository, RetiradaRepository retiradaRepository) {
         this.recursoRepository = repository;
         this.colaboradorRepository = colaboradorRepository;
         this.reservaRepository = reservaRepository;
+        this.retiradaRepository = retiradaRepository;
     }
 
     public void cadastrar(ReservaDto dto) {
@@ -34,6 +38,9 @@ public class ReservaService {
         RecursoEntity recurso = recursoRepository.findById(dto.getRecursoId())
                 .orElseThrow(() -> new RuntimeException("Recurso não existe"));
 
+        RetiradaEntity retirada = retiradaRepository.findById(dto.getRetiradaId())
+                .orElseThrow(() -> new RuntimeException("Retirada não existe"));
+
         boolean reserva = reservaRepository.existsByRecursoIdAndDataAndHoraInicialLessThanEqualAndHoraFinalGreaterThanEqual(
                 dto.getRecursoId(), dto.getData(), dto.getHoraFinal(), dto.getHoraInicial()
         );
@@ -42,7 +49,7 @@ public class ReservaService {
             throw new IllegalArgumentException("Este recurso já está reservado nesse horário!");
         }
 
-        reservaRepository.save(paraEntity(dto, colaborador, recurso));
+        reservaRepository.save(paraEntity(dto, colaborador, recurso, retirada));
     }
 
     public List<ReservaDto> listar() {
@@ -108,16 +115,18 @@ public class ReservaService {
         dto.setHoraFinal(entity.getHoraFinal());
         dto.setColaboradorNome(entity.getColaborador().getNome());
         dto.setRecursoDescricao(entity.getRecurso().getDescricao());
+        dto.setRetiradaEndereco(entity.getRetirada().getEndereco());
 
         return dto;
     }
 
-    public ReservaEntity paraEntity(ReservaDto dto, ColaboradorEntity colaborador, RecursoEntity recurso) {
+    public ReservaEntity paraEntity(ReservaDto dto, ColaboradorEntity colaborador, RecursoEntity recurso, RetiradaEntity retirada) {
         ReservaEntity entity = new ReservaEntity();
 
         entity.setId(dto.getId());
         entity.setColaborador(colaborador);
         entity.setRecurso(recurso);
+        entity.setRetirada(retirada);
         entity.setData(dto.getData());
         entity.setHoraInicial(dto.getHoraInicial());
         entity.setHoraFinal(dto.getHoraFinal());
