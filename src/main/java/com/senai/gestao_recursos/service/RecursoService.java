@@ -114,7 +114,11 @@ public class RecursoService {
         dto.setDataFinalAgendamento(entity.getDataFinalAgendamento());
         dto.setHoraInicialAgendamento(entity.getHoraInicialAgendamento());
         dto.setHoraFinalAgendamento(entity.getHoraFinalAgendamento());
-        dto.setLocalizacaoEndereco(entity.getLocalizacao().getEndereco());
+
+        if (entity.getLocalizacao() != null) {
+            dto.setLocalizacaoId(entity.getLocalizacao().getId());
+            dto.setLocalizacaoEndereco(entity.getLocalizacao().getEndereco());
+        }
 
         return dto;
     }

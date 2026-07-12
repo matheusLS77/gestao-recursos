@@ -97,34 +97,27 @@
 
                         <div class="mb-3">
                             <label for="dataInicial" class="form-label fw-medium">Nova Data Inicial</label>
-                            <input type="date" class="form-control" id="dataInicial" th:field="*{dataInicialAgendamento}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataInicialAgendamento')}" th:errors="*{dataInicialAgendamento}">
-                                Erro na data inicial
+                            <input type="date" class="form-control" id="dataInicial" th:value="${recurso.dataInicialAgendamento}" name="dataInicialAgendamento">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataInicialAgendamento')}" th:errors="*{dataInicialAgendamento}">Erro na data inicial
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="dataFinalAgendamento" class="form-label fw-medium">Nova Data Final</label>
-                            <input type="date" class="form-control" id="dataFinalAgendamento" th:field="*{dataFinalAgendamento}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataFinalAgendamento')}" th:errors="*{dataFinalAgendamento}">
-                                Erro na data final
-                            </div>
+                            <label for="dataFinal" class="form-label fw-medium">Nova Data Final</label>
+                            <input type="date" class="form-control" id="dataFinal" th:value="${recurso.dataFinalAgendamento}" name="dataFinalAgendamento">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('dataFinalAgendamento')}" th:errors="*{dataInicialAgendamento}">Erro na data final</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="horaInicialAgendamento" class="form-label fw-medium">Novo Horário Inicial</label>
-                            <input type="time" class="form-control" id="horaInicialAgendamento" th:field="*{horaInicialAgendamento}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaInicialAgendamento')}" th:errors="*{horaInicialAgendamento}">
-                                Erro no horário inicial
-                            </div>
+                            <label for="horaInicial" class="form-label fw-medium">Novo Horário Inicial</label>
+                            <input type="time" class="form-control" id="horaInicial" th:value="${recurso.horaInicialAgendamento}" name="horaInicialAgendamento">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaInicialAgendamento')}" th:errors="*{horaInicialAgendamento}">Erro no horário inicial</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="horaFinalAgendamento" class="form-label fw-medium">Novo Horário Final</label>
-                            <input type="time" class="form-control" id="horaFinalAgendamento" th:field="*{horaFinalAgendamento}">
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaFinalAgendamento')}" th:errors="*{horaFinalAgendamento}">
-                                Erro no horário final
-                            </div>
+                            <label for="horaFinal" class="form-label fw-medium">Novo Horário Final</label>
+                            <input type="time" class="form-control" id="horaFinal" th:value="${recurso.horaFinalAgendamento}" name="horaFinalAgendamento">
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('horaFinalAgendamento')}" th:errors="*{horaFinalAgendamento}">Erro no horário final</div>
                         </div>
 
                         <div class="mb-3">

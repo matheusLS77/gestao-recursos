@@ -41,6 +41,7 @@ public class RecursoController {
         }
 
         if(bindingResult.hasErrors()) {
+
             model.addAttribute("localizacoes", localizacaoService.listar());
             return "recursocadastrar";
         }
@@ -49,7 +50,6 @@ public class RecursoController {
             recursoService.cadastrar(dto);
         } catch (IllegalArgumentException e) {
             model.addAttribute("erro", e.getMessage());
-
             model.addAttribute("localizacoes", localizacaoService.listar());
 
             return "recursocadastrar";
@@ -79,7 +79,6 @@ public class RecursoController {
             recursoService.atualizar(dto);
         } catch (IllegalArgumentException e) {
             model.addAttribute("erro", e.getMessage());
-
             model.addAttribute("localizacoes", localizacaoService.listar());
 
             return "recursoatualizar";
