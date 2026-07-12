@@ -21,9 +21,16 @@ public class RecursoService {
         this.repository = repository;
     }
 
-    public void cadastrar(RecursoDto dto){
+    public void cadastrar(RecursoDto dto) {
         if (dto.getDiasDaSemanaDisponivel() == null) {
             dto.setDiasDaSemanaDisponivel(new ArrayList<>());
+        }
+
+        if (dto.getDataInicialAgendamento() != null
+                && dto.getDataFinalAgendamento() != null
+                && dto.getDataFinalAgendamento().isBefore(dto.getDataInicialAgendamento())) {
+
+            throw new IllegalArgumentException("A data final não pode ser anterior à data inicial.");
         }
 
         LocalizacaoEntity localizacao = localizacaoRepository.findById(dto.getLocalizacaoId()).orElseThrow(() -> new RuntimeException("Localização não encontrada"));
@@ -49,6 +56,8 @@ public class RecursoService {
 
         if (recursoOp.isPresent()) {
             RecursoEntity recurso = recursoOp.get();
+            LocalizacaoEntity localizacao = localizacaoRepository.findById(dto.getLocalizacaoId()).orElseThrow(()
+                    -> new RuntimeException("Localização não encontrada"));
 
             recurso.setDescricao(dto.getDescricao());
             recurso.setTipo(dto.getTipo());
@@ -57,6 +66,7 @@ public class RecursoService {
             recurso.setDataFinalAgendamento(dto.getDataFinalAgendamento());
             recurso.setHoraInicialAgendamento(dto.getHoraInicialAgendamento());
             recurso.setHoraFinalAgendamento(dto.getHoraFinalAgendamento());
+            recurso.setLocalizacao(localizacao);
 
             repository.save(recurso);
         }

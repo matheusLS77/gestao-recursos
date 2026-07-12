@@ -44,6 +44,7 @@ public class ReservaController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("colaboradores", colaboradorService.listar());
             model.addAttribute("recursos", recursoService.listar());
+
             return "reservacadastrar";
         }
 
@@ -51,6 +52,10 @@ public class ReservaController {
             service.cadastrar(dto);
         } catch (IllegalArgumentException e) {
             model.addAttribute("erro", e.getMessage());
+
+            model.addAttribute("colaboradores", colaboradorService.listar());
+            model.addAttribute("recursos", recursoService.listar());
+
             return "reservacadastrar";
         }
 

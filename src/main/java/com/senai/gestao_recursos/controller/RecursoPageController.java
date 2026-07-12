@@ -50,7 +50,9 @@ public class RecursoPageController {
         }
 
         RecursoDto recurso = recursoService.obterRecurso(id);
+
         model.addAttribute("recurso", recurso);
+        model.addAttribute("localizacoes", localizacaoService.listar());
 
         return "recursoatualizar";
     }

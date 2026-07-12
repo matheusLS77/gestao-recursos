@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,9 +30,9 @@ public class RecursoController {
         this.localizacaoService = localizacaoService;
     }
 
-    @PostMapping("/recursos")
-    private String cadastrarProduto(@Valid @ModelAttribute("recurso") RecursoDto dto,
-                                    BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session){
+    @PostMapping("/recurso")
+    private String cadastrarRecurso(@Valid @ModelAttribute("recurso") RecursoDto dto, BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -39,19 +40,29 @@ public class RecursoController {
             return "redirect:/login";
         }
 
-        if(bindingResult.hasErrors()){
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("localizacoes", localizacaoService.listar());
             return "recursocadastrar";
         }
 
-        recursoService.cadastrar(dto);
+        try {
+            recursoService.cadastrar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+
+            model.addAttribute("localizacoes", localizacaoService.listar());
+
+            return "recursocadastrar";
+        }
+
         redirectAttributes.addFlashAttribute("mensagem", "Recurso cadastrado com sucesso ");
 
         return "redirect:/recursolista";
     }
 
     @PostMapping("/recursoatualizar")
-    public String atualizarRecurso(@Valid @ModelAttribute("recurso") RecursoDto dto,
-                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String atualizarRecurso(@Valid @ModelAttribute("recurso") RecursoDto dto, BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
@@ -60,10 +71,20 @@ public class RecursoController {
         }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("localizacoes", localizacaoService.listar());
             return "recursoatualizar";
         }
 
-        recursoService.atualizar(dto);
+        try {
+            recursoService.atualizar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+
+            model.addAttribute("localizacoes", localizacaoService.listar());
+
+            return "recursoatualizar";
+        }
+
         redirectAttributes.addFlashAttribute("mensagem", "Recurso atualizado com sucesso ");
 
         return "redirect:/recursolista";

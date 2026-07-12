@@ -1,6 +1,7 @@
 package com.senai.gestao_recursos.dto;
 
 import com.senai.gestao_recursos.enums.TipoRecurso;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,7 +28,10 @@ public class RecursoDto {
 
     private String localizacaoEndereco;
 
+    @FutureOrPresent(message = "Deve ser uma data futura ou presente")
     private LocalDate dataInicialAgendamento;
+
+    @FutureOrPresent(message = "Deve ser uma data futura ou presente")
     private LocalDate dataFinalAgendamento;
 
     private LocalTime horaInicialAgendamento;
