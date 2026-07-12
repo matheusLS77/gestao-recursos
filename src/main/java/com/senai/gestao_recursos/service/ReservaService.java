@@ -5,13 +5,14 @@ import com.senai.gestao_recursos.dto.ReservaDto;
 import com.senai.gestao_recursos.entity.ColaboradorEntity;
 import com.senai.gestao_recursos.entity.RecursoEntity;
 import com.senai.gestao_recursos.entity.ReservaEntity;
-import com.senai.gestao_recursos.entity.RetiradaEntity;
+import com.senai.gestao_recursos.entity.LocalizacaoEntity;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import com.senai.gestao_recursos.repository.RecursoRepository;
 import com.senai.gestao_recursos.repository.ReservaRepository;
-import com.senai.gestao_recursos.repository.RetiradaRepository;
+import com.senai.gestao_recursos.repository.LocalizacaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,34 +23,39 @@ public class ReservaService {
     private final RecursoRepository recursoRepository;
     private final ColaboradorRepository colaboradorRepository;
     private final ReservaRepository reservaRepository;
-    private final RetiradaRepository retiradaRepository;
 
-    public ReservaService(RecursoRepository repository, ColaboradorRepository colaboradorRepository, ReservaRepository reservaRepository, RetiradaRepository retiradaRepository) {
+    public ReservaService(RecursoRepository repository, ColaboradorRepository colaboradorRepository, ReservaRepository reservaRepository) {
         this.recursoRepository = repository;
         this.colaboradorRepository = colaboradorRepository;
         this.reservaRepository = reservaRepository;
-        this.retiradaRepository = retiradaRepository;
     }
 
     public void cadastrar(ReservaDto dto) {
         ColaboradorEntity colaborador = colaboradorRepository.findById(dto.getColaboradorId())
-                .orElseThrow(() -> new RuntimeException("Colaborador não existe"));
+                .orElseThrow(() -> new RuntimeException("Colaborador não cadastrado"));
 
         RecursoEntity recurso = recursoRepository.findById(dto.getRecursoId())
-                .orElseThrow(() -> new RuntimeException("Recurso não existe"));
+                .orElseThrow(() -> new RuntimeException("Recurso não cadastrado"));
 
-        RetiradaEntity retirada = retiradaRepository.findById(dto.getRetiradaId())
-                .orElseThrow(() -> new RuntimeException("Retirada não existe"));
+        DayOfWeek diaReserva = dto.getData().getDayOfWeek();
+
+        if (dto.getData().isBefore(recurso.getDataInicialAgendamento()) || dto.getData().isAfter(recurso.getDataFinalAgendamento())) {
+            throw new IllegalArgumentException("A data da reserva não está dentro da data disponível do recurso.");
+        }
+
+        if (!recurso.getDiasDaSemanaDisponivel().contains(diaReserva)) {
+            throw new IllegalArgumentException("O recurso não está disponível neste dia da semana");
+        }
 
         boolean reserva = reservaRepository.existsByRecursoIdAndDataAndHoraInicialLessThanEqualAndHoraFinalGreaterThanEqual(
                 dto.getRecursoId(), dto.getData(), dto.getHoraFinal(), dto.getHoraInicial()
         );
 
         if (reserva) {
-            throw new IllegalArgumentException("Este recurso já está reservado nesse horário!");
+            throw new IllegalArgumentException("Este recurso já está reservado nesse horário");
         }
 
-        reservaRepository.save(paraEntity(dto, colaborador, recurso, retirada));
+        reservaRepository.save(paraEntity(dto, colaborador, recurso));
     }
 
     public List<ReservaDto> listar() {
@@ -115,18 +121,16 @@ public class ReservaService {
         dto.setHoraFinal(entity.getHoraFinal());
         dto.setColaboradorNome(entity.getColaborador().getNome());
         dto.setRecursoDescricao(entity.getRecurso().getDescricao());
-        dto.setRetiradaEndereco(entity.getRetirada().getEndereco());
 
         return dto;
     }
 
-    public ReservaEntity paraEntity(ReservaDto dto, ColaboradorEntity colaborador, RecursoEntity recurso, RetiradaEntity retirada) {
+    public ReservaEntity paraEntity(ReservaDto dto, ColaboradorEntity colaborador, RecursoEntity recurso) {
         ReservaEntity entity = new ReservaEntity();
 
         entity.setId(dto.getId());
         entity.setColaborador(colaborador);
         entity.setRecurso(recurso);
-        entity.setRetirada(retirada);
         entity.setData(dto.getData());
         entity.setHoraInicial(dto.getHoraInicial());
         entity.setHoraFinal(dto.getHoraFinal());

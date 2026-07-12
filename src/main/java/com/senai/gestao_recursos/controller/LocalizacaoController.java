@@ -1,7 +1,7 @@
 package com.senai.gestao_recursos.controller;
 
-import com.senai.gestao_recursos.dto.RetiradaDto;
-import com.senai.gestao_recursos.service.RetiradaService;
+import com.senai.gestao_recursos.dto.LocalizacaoDto;
+import com.senai.gestao_recursos.service.LocalizacaoService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
@@ -18,42 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class RetiradaController {
-    private final RetiradaService service;
+public class LocalizacaoController {
+    private final LocalizacaoService service;
 
-    public RetiradaController(RetiradaService service) {
+    public LocalizacaoController(LocalizacaoService service) {
         this.service = service;
     }
 
 
-    @PostMapping("/retirada")
-    public String cadastrarRetirada(@Valid @ModelAttribute("retirada") RetiradaDto dto,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
-
-        SessaoDto usuario = SessaoUtil.obterSessao(session);
-
-        if (usuario == null) {
-            return "redirect:/login";
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "retiradacadastrar";
-        }
-
-        try {
-            service.cadastrar(dto);
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("erro", e.getMessage());
-            return "retiradacadastrar";
-        }
-
-        redirectAttributes.addFlashAttribute("mensagem", "Retirada cadastrada com sucesso.");
-
-        return "redirect:/retiradalista";
-    }
-
-    @PostMapping("/retiradaatualizar")
-    public String atualizarRetirada(@Valid @ModelAttribute("retirada") RetiradaDto dto,
+    @PostMapping("/localizacao")
+    public String cadastrarLocalizacao(@Valid @ModelAttribute("localizacao") LocalizacaoDto dto,
                                        BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         SessaoDto usuario = SessaoUtil.obterSessao(session);
@@ -63,23 +37,49 @@ public class RetiradaController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "retiradaatualizar";
+            return "localizacaocadastrar";
+        }
+
+        try {
+            service.cadastrar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "localizacaocadastrar";
+        }
+
+        redirectAttributes.addFlashAttribute("mensagem", "Localização cadastrada com sucesso.");
+
+        return "redirect:/localizacaolista";
+    }
+
+    @PostMapping("/localizacaoatualizar")
+    public String atualizarLocalizacao(@Valid @ModelAttribute("localizacao") LocalizacaoDto dto,
+                                       BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, Model model) {
+
+        SessaoDto usuario = SessaoUtil.obterSessao(session);
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "localizacaoatualizar";
         }
 
         try {
             service.atualizar(dto);
         } catch (IllegalArgumentException e) {
             model.addAttribute("erro", e.getMessage());
-            return "retiradaatualizar";
+            return "localizacaoatualizar";
         }
 
-        redirectAttributes.addFlashAttribute("mensagem", "Retirada atualizada com sucesso ");
+        redirectAttributes.addFlashAttribute("mensagem", "Localização atualizada com sucesso ");
 
-        return "redirect:/retiradalista";
+        return "redirect:/localizacaolista";
     }
 
-    @DeleteMapping("/retiradaexcluir/{id}")
-    public ResponseEntity<String> removerRetirada(@PathVariable Long id, HttpSession session) {
+    @DeleteMapping("/localizacaoexcluir/{id}")
+    public ResponseEntity<String> removerLocalizacao(@PathVariable Long id, HttpSession session) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
 
         if (usuario == null) {
@@ -88,7 +88,7 @@ public class RetiradaController {
 
         try {
             service.remover(id);
-            return ResponseEntity.ok("Retirada excluída com sucesso.");
+            return ResponseEntity.ok("Localização excluída com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

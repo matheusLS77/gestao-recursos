@@ -22,26 +22,18 @@ public class RecursoDto {
 
     private List<DayOfWeek> diasDaSemanaDisponivel = new ArrayList<>();
 
-    private LocalDate dataInicialAgendamento;
+    @NotNull(message = "A localização é obrigatória.")
+    private Long localizacaoId;
 
+    private String localizacaoEndereco;
+
+    private LocalDate dataInicialAgendamento;
     private LocalDate dataFinalAgendamento;
 
     private LocalTime horaInicialAgendamento;
-
     private LocalTime horaFinalAgendamento;
 
     public RecursoDto() {
-    }
-
-    public RecursoDto(Long id, String descricao, TipoRecurso tipo, List<DayOfWeek> diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
-        this.id = id;
-        this.descricao = descricao;
-        this.tipo = tipo;
-        this.diasDaSemanaDisponivel = diasDaSemanaDisponivel;
-        this.dataFinalAgendamento = dataFinal;
-        this.dataInicialAgendamento = dataInicial;
-        this.horaInicialAgendamento = horarioInicial;
-        this.horaFinalAgendamento = horarioFinal;
     }
 
     public Long getId() {
@@ -106,5 +98,21 @@ public class RecursoDto {
 
     public void setHoraFinalAgendamento(LocalTime horaFinalAgendamento) {
         this.horaFinalAgendamento = horaFinalAgendamento;
+    }
+
+    public String getLocalizacaoEndereco() {
+        return localizacaoEndereco;
+    }
+
+    public void setLocalizacaoEndereco(String localizacaoEndereco) {
+        this.localizacaoEndereco = localizacaoEndereco;
+    }
+
+    public Long getLocalizacaoId() {
+        return localizacaoId;
+    }
+
+    public void setLocalizacaoId(Long localizacaoId) {
+        this.localizacaoId = localizacaoId;
     }
 }

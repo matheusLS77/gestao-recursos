@@ -23,13 +23,9 @@ public class ReservaDto {
     @NotNull(message = "Hora final é obrigatória")
     private LocalTime horaFinal;
 
-    @NotNull(message = "Retirada é obrigatória")
-    private Long retiradaId;
-
     private LocalDate dataCancelamento;
     private String motivoCancelamento;
 
-    private String retiradaEndereco;
     private String colaboradorNome;
     private String recursoDescricao;
 
@@ -114,21 +110,5 @@ public class ReservaDto {
 
     public void setRecursoDescricao(String recursoDescricao) {
         this.recursoDescricao = recursoDescricao;
-    }
-
-    public Long getRetiradaId() {
-        return retiradaId;
-    }
-
-    public void setRetiradaId(Long retiradaId) {
-        this.retiradaId = retiradaId;
-    }
-
-    public String getRetiradaEndereco() {
-        return retiradaEndereco;
-    }
-
-    public void setRetiradaEndereco(String retiradaEndereco) {
-        this.retiradaEndereco = retiradaEndereco;
     }
 }

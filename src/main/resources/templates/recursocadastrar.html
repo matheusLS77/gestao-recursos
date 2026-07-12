@@ -33,6 +33,9 @@
                     <a class="nav-link text-light-emphasis" th:href="@{/reservalista}">Reservas</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-light-emphasis" th:href="@{/localizacaolista}">Localização de Recursos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-light-emphasis" th:href="@{/login}">Sair</a>
                 </li>
             </ul>
@@ -63,11 +66,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="tipo" class="form-label fw-medium">Tipo</label>
-                            <input type="text" class="form-control" id="tipo" th:field="*{tipo}" placeholder="Digite o tipo" required>
-                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">
-                                Erro no tipo
-                            </div>
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <select class="form-select" id="tipo" th:field="*{tipo}" required>
+                                <option value="">Selecione o tipo</option>
+                                <option th:each="tipo : ${T(com.senai.gestao_recursos.enums.TipoRecurso).values()}" th:value="${tipo}" th:text="${tipo}">
+                                </option>
+                            </select>
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}"></div>
                         </div>
 
                         <div class="mb-3">
@@ -76,7 +81,6 @@
                             <div class="row g-3 px-2 justify-content-between">
                                 <div class="col-md-auto form-check" th:each="dia : ${T(java.time.DayOfWeek).values()}">
                                     <input class="form-check-input" type="checkbox" th:field="*{diasDaSemanaDisponivel}" th:value="${dia}" th:id="${dia.name()}">
-
                                     <label class="form-check-label" th:for="${dia.name()}" th:text="${#strings.capitalize(#strings.toLowerCase(dia.name()))}"></label>
                                 </div>
                             </div>
@@ -115,6 +119,19 @@
                                 Erro no horário final
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="localizacaoId" class="form-label fw-medium">Localização do Recurso</label>
+                            <select class="form-select" id="localizacaoId" th:field="*{localizacaoId}" required>
+                                <option value="">Escolha a localização</option>
+                                <option th:each="localizacao : ${localizacoes}"
+                                        th:value="${localizacao.id}"
+                                        th:text="${localizacao.endereco}">
+                                </option>
+                            </select>
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('localizacaoId')}" th:errors="*{localizacaoId}">Erro na localização</div>
+                        </div>
+
                         <div class="d-flex justify-content-end gap-2">
                             <a class="btn btn-outline-secondary" th:href="@{/recursolista}">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Salvar</button>

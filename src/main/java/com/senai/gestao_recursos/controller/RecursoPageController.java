@@ -4,6 +4,7 @@ import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.dto.RecursoDto;
 import com.senai.gestao_recursos.entity.RecursoEntity;
 import com.senai.gestao_recursos.repository.RecursoRepository;
+import com.senai.gestao_recursos.service.LocalizacaoService;
 import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
@@ -19,9 +20,11 @@ import java.util.List;
 public class RecursoPageController {
 
     private final RecursoService recursoService;
+    private final LocalizacaoService localizacaoService;
 
-    public RecursoPageController(RecursoService recursoService) {
+    public RecursoPageController(RecursoService recursoService, LocalizacaoService localizacaoService) {
         this.recursoService = recursoService;
+        this.localizacaoService = localizacaoService;
     }
 
     @GetMapping("/recursocadastrar")
@@ -33,6 +36,7 @@ public class RecursoPageController {
         }
 
         model.addAttribute("recurso", new RecursoDto());
+        model.addAttribute("localizacoes", localizacaoService.listar());
 
         return "recursocadastrar";
     }

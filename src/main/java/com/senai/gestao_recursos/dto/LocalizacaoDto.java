@@ -1,22 +1,15 @@
-package com.senai.gestao_recursos.entity;
+package com.senai.gestao_recursos.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "local_retirada")
-public class RetiradaEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+public class LocalizacaoDto {
     private Long id;
-
-    @Column
     private String nome;
 
-    @Column
+    @NotBlank(message = "O endereço é obrigatório")
     private String endereco;
 
-    public RetiradaEntity() {
+    public LocalizacaoDto() {
     }
 
     public Long getId() {

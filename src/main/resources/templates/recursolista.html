@@ -33,6 +33,9 @@
                     <a class="nav-link text-light-emphasis" th:href="@{/reservalista}">Reservas</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-light-emphasis" th:href="@{/localizacaolista}">Localização de Recursos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-light-emphasis" th:href="@{/login}">Sair</a>
                 </li>
             </ul>
@@ -60,14 +63,15 @@
                 <table class="table table-striped align-middle mb-0">
                     <thead class="table-primary">
                     <tr>
-                        <th>ID</th>
-                        <th>Descrição</th>
-                        <th>Tipo</th>
-                        <th>Dias disponíveis</th>
-                        <th>Data inicial</th>
-                        <th>Data final</th>
-                        <th>Hora inicial</th>
-                        <th>Hora final</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Dias disponíveis</th>
+                        <th scope="col">Data inicial</th>
+                        <th scope="col">Data final</th>
+                        <th scope="col">Hora inicial</th>
+                        <th scope="col">Hora final</th>
+                        <th scope="col">Localização</th>
                         <th class="text-end">Ações</th>
                     </tr>
                     </thead>
@@ -75,20 +79,20 @@
                     <tbody>
 
                     <tr th:each="recurso : ${recursos}">
-                        <td th:text="${recurso.id}"></td>
-                        <td th:text="${recurso.descricao}"></td>
-                        <td th:text="${recurso.tipo}"></td>
+                        <td th:text="${recurso.id}">1</td>
+                        <td th:text="${recurso.descricao}">Descricao</td>
+                        <td th:text="${recurso.tipo}">Tipo</td>
 
                         <td>
                 <span th:each="dia, stat : ${recurso.diasDaSemanaDisponivel}">
                     <span th:text="${dia}"></span><span th:if="${!stat.last}">, </span></span>
                         </td>
 
-                        <td th:text="${recurso.dataInicialAgendamento}"></td>
-                        <td th:text="${recurso.dataFinalAgendamento}"></td>
-                        <td th:text="${recurso.horaInicialAgendamento}"></td>
-                        <td th:text="${recurso.horaFinalAgendamento}"></td>
-
+                        <td th:text="${recurso.dataInicialAgendamento}">Data Inicial</td>
+                        <td th:text="${recurso.dataFinalAgendamento}">Data Final</td>
+                        <td th:text="${recurso.horaInicialAgendamento}">Hora Inicial</td>
+                        <td th:text="${recurso.horaFinalAgendamento}">Hora Final</td>
+                        <td th:text="${recurso.localizacaoEndereco}">Localização</td>
                         <td class="text-end">
                             <a class="btn btn-sm btn-primary me-1" th:href="@{/recursoatualizar/{id}(id=${recurso.id})}">Editar</a>
                             <button class="btn btn-sm btn-danger excluirRecurso" th:data-id="${recurso.id}"> Excluir </button>
@@ -96,9 +100,7 @@
                     </tr>
 
                     <tr th:if="${#lists.isEmpty(recursos)}">
-                        <td colspan="9" class="text-center text-secondary py-4">
-                            Nenhum recurso cadastrado.
-                        </td>
+                        <td colspan="10" class="text-center text-secondary py-4">Nenhum recurso cadastrado.</td>
                     </tr>
 
                     </tbody>
@@ -108,7 +110,7 @@
     </div>
 </main>
 
-<script src="/excluir_colaborador.js"></script>
+<script src="/excluir_recurso.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

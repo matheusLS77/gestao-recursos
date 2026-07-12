@@ -2,6 +2,8 @@ package com.senai.gestao_recursos.controller;
 
 import com.senai.gestao_recursos.dto.CancelamentoDto;
 import com.senai.gestao_recursos.dto.ReservaDto;
+import com.senai.gestao_recursos.service.ColaboradorService;
+import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.service.ReservaService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
@@ -21,9 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class ReservaController {
     private final ReservaService service;
+    private final ColaboradorService colaboradorService;
+    private final RecursoService recursoService;
 
-    public ReservaController(ReservaService service) {
+    public ReservaController(ReservaService service, ColaboradorService colaboradorService, RecursoService recursoService) {
         this.service = service;
+        this.colaboradorService = colaboradorService;
+        this.recursoService = recursoService;
     }
 
     @PostMapping("/reservas")
@@ -36,6 +42,8 @@ public class ReservaController {
         }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("colaboradores", colaboradorService.listar());
+            model.addAttribute("recursos", recursoService.listar());
             return "reservacadastrar";
         }
 

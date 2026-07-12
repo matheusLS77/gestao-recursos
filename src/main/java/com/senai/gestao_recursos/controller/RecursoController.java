@@ -2,6 +2,7 @@ package com.senai.gestao_recursos.controller;
 
 import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.dto.RecursoDto;
+import com.senai.gestao_recursos.service.LocalizacaoService;
 import com.senai.gestao_recursos.service.RecursoService;
 import com.senai.gestao_recursos.sessoes.SessaoDto;
 import com.senai.gestao_recursos.sessoes.SessaoUtil;
@@ -21,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RecursoController {
 
     private final RecursoService recursoService;
+    private final LocalizacaoService localizacaoService;
 
-    public RecursoController(RecursoService recursoService) {
+    public RecursoController(RecursoService recursoService, LocalizacaoService localizacaoService) {
         this.recursoService = recursoService;
+        this.localizacaoService = localizacaoService;
     }
 
     @PostMapping("/recursos")

@@ -1,7 +1,9 @@
 package com.senai.gestao_recursos.service;
 
 import com.senai.gestao_recursos.dto.RecursoDto;
+import com.senai.gestao_recursos.entity.LocalizacaoEntity;
 import com.senai.gestao_recursos.entity.RecursoEntity;
+import com.senai.gestao_recursos.repository.LocalizacaoRepository;
 import com.senai.gestao_recursos.repository.RecursoRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,11 @@ import java.util.Optional;
 
 @Service
 public class RecursoService {
-
+    private final LocalizacaoRepository localizacaoRepository;
     private final RecursoRepository repository;
-    public RecursoService(RecursoRepository repository) {
+
+    public RecursoService(LocalizacaoRepository localizacaoRepository, RecursoRepository repository) {
+        this.localizacaoRepository = localizacaoRepository;
         this.repository = repository;
     }
 
@@ -22,7 +26,10 @@ public class RecursoService {
             dto.setDiasDaSemanaDisponivel(new ArrayList<>());
         }
 
+        LocalizacaoEntity localizacao = localizacaoRepository.findById(dto.getLocalizacaoId()).orElseThrow(() -> new RuntimeException("Localização não encontrada"));
+
         RecursoEntity entity = paraEntity(dto);
+        entity.setLocalizacao(localizacao);
 
         repository.save(entity);
     }
@@ -97,6 +104,7 @@ public class RecursoService {
         dto.setDataFinalAgendamento(entity.getDataFinalAgendamento());
         dto.setHoraInicialAgendamento(entity.getHoraInicialAgendamento());
         dto.setHoraFinalAgendamento(entity.getHoraFinalAgendamento());
+        dto.setLocalizacaoEndereco(entity.getLocalizacao().getEndereco());
 
         return dto;
     }

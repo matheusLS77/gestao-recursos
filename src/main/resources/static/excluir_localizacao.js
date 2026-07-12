@@ -1,5 +1,5 @@
 // Adicione um ouvinte de eventos aos botões de exclusão
-document.querySelectorAll('.excluirRetirada').forEach(function(button) {
+document.querySelectorAll('.excluirLocal').forEach(function(button) {
     button.addEventListener('click',
         function() {
             if (confirm('Confirma a exclusão?')) {
@@ -11,7 +11,7 @@ document.querySelectorAll('.excluirRetirada').forEach(function(button) {
                 //console.log("id=" + id);
 
                 // Realize a chamada AJAX para excluir o recurso
-                fetch(`/retiradasexcluir/${id}`, {
+                fetch(`/localizacaoexcluir/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -20,14 +20,14 @@ document.querySelectorAll('.excluirRetirada').forEach(function(button) {
                     .then(response => {
                         if (response.ok) {
                             // A exclusão foi bem-sucedida
-                            console.log('Recurso excluído com sucesso.');
+                            console.log('Localização excluída com sucesso.');
 
                             // Remove a linha da tabela após a exclusão
                             linha.remove();
                         } else {
                             // A solicitação DELETE falhou
-                            console.error('Erro ao excluir retirada.');
-                            alert('Erro ao excluir retirada');
+                            console.error('Erro ao excluir localização.');
+                            alert('Erro ao excluir localização');
                         }
                     })
                     .catch(error => {

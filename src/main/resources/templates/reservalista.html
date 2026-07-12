@@ -33,6 +33,9 @@
                     <a class="nav-link active text-light-emphasis" th:href="@{/reservalista}">Reservas</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-light-emphasis" th:href="@{/localizacaolista}">Localização de Recursos</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-light-emphasis" th:href="@{/login}">Sair</a>
                 </li>
             </ul>
@@ -85,7 +88,7 @@
                     </tr>
 
                     <tr th:if="${#lists.isEmpty(reservas)}">
-                        <td colspan="4" class="text-center text-secondary py-4">Nenhuma reserva cadastrada.</td>
+                        <td colspan="7" class="text-center text-secondary py-4">Nenhuma reserva cadastrada.</td>
                     </tr>
                     </tbody>
                 </table>
@@ -94,7 +97,6 @@
     </div>
 </main>
 
-<script src="/excluir_colaborador.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

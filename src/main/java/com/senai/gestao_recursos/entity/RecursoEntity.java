@@ -46,6 +46,10 @@ public class RecursoEntity {
     @Column
     private LocalTime horaFinalAgendamento;
 
+    @ManyToOne
+    @JoinColumn(name = "localizacao_id")
+    private LocalizacaoEntity localizacao;
+
     public RecursoEntity(Long id, String descricao, TipoRecurso tipo, List<DayOfWeek> diasDaSemanaDisponivel, LocalDate dataInicial, LocalDate dataFinal, LocalTime horarioInicial, LocalTime horarioFinal) {
         this.id = id;
         this.descricao = descricao;
@@ -122,5 +126,13 @@ public class RecursoEntity {
 
     public void setHoraFinalAgendamento(LocalTime horaFinalAgendamento) {
         this.horaFinalAgendamento = horaFinalAgendamento;
+    }
+
+    public LocalizacaoEntity getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(LocalizacaoEntity localizacao) {
+        this.localizacao = localizacao;
     }
 }

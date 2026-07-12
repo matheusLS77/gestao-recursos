@@ -35,10 +35,6 @@ public class ReservaEntity {
     @Column
     private String motivoCancelamento;
 
-    @ManyToOne
-    @JoinColumn(name = "retirada_id")
-    private RetiradaEntity retirada;
-
     public ReservaEntity() {
     }
 
@@ -104,13 +100,5 @@ public class ReservaEntity {
 
     public void setMotivoCancelamento(String motivoCancelamento) {
         this.motivoCancelamento = motivoCancelamento;
-    }
-
-    public RetiradaEntity getRetirada() {
-        return retirada;
-    }
-
-    public void setRetirada(RetiradaEntity retirada) {
-        this.retirada = retirada;
     }
 }
