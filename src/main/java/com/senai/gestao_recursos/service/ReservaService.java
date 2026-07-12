@@ -47,6 +47,14 @@ public class ReservaService {
             throw new IllegalArgumentException("O recurso não está disponível neste dia da semana");
         }
 
+        if (dto.getHoraInicial().isBefore(recurso.getHoraInicialAgendamento()) || dto.getHoraFinal().isAfter(recurso.getHoraFinalAgendamento())) {
+            throw new IllegalArgumentException("O horário da reserva está fora do horário disponível do recurso");
+        }
+
+        if (!dto.getHoraFinal().isAfter(dto.getHoraInicial())) {
+            throw new IllegalArgumentException("A hora final não pode ser anterior à hora inicial.");
+        }
+
         boolean reserva = reservaRepository.existsByRecursoIdAndDataAndHoraInicialLessThanEqualAndHoraFinalGreaterThanEqual(
                 dto.getRecursoId(), dto.getData(), dto.getHoraFinal(), dto.getHoraInicial()
         );
