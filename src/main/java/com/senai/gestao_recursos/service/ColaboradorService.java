@@ -2,6 +2,7 @@ package com.senai.gestao_recursos.service;
 
 import com.senai.gestao_recursos.dto.ColaboradorDto;
 import com.senai.gestao_recursos.entity.ColaboradorEntity;
+import com.senai.gestao_recursos.entity.RecursoEntity;
 import com.senai.gestao_recursos.entity.ReservaEntity;
 import com.senai.gestao_recursos.repository.ColaboradorRepository;
 import com.senai.gestao_recursos.repository.ReservaRepository;
@@ -25,8 +26,8 @@ public class ColaboradorService {
     public void cadastrar(ColaboradorDto dto) {
         LocalDate hoje = LocalDate.now();
 
-        if (dto.getDataNascimento().isBefore(hoje.minusYears(500))) {
-            throw new IllegalArgumentException("A data de nascimento não pode ser anterior a 500 anos ");
+        if (dto.getDataNascimento().isBefore(hoje.minusYears(100))) {
+            throw new IllegalArgumentException("A data de nascimento não pode ser anterior a 100 anos ");
         }
 
         if (repository.existsByEmail(dto.getEmail())) {
@@ -67,19 +68,20 @@ public class ColaboradorService {
             }
         }
 
-        Optional<ColaboradorEntity> colaboradorOp = repository.findById(dto.getId());
+        ColaboradorEntity colaborador = repository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Colaborador não encontrado"));
 
-        if (colaboradorOp.isPresent()) {
-            ColaboradorEntity colaborador = colaboradorOp.get();
+        colaborador.setNome(dto.getNome());
+        colaborador.setEmail(dto.getEmail());
+        colaborador.setDataNascimento(dto.getDataNascimento());
 
-            colaborador.setNome(dto.getNome());
-            colaborador.setEmail(dto.getEmail());
-            colaborador.setDataNascimento(dto.getDataNascimento());
+        if (dto.getSenha() != null && !dto.getSenha().isBlank()) {
             colaborador.setSenha(dto.getSenha());
-            colaborador.setMatricula(dto.getMatricula());
-
-            repository.save(colaborador);
         }
+
+        colaborador.setMatricula(dto.getMatricula());
+
+        repository.save(colaborador);
     }
 
     public void remover(Long id) {
