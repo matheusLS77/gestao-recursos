@@ -31,6 +31,10 @@ public class ReservaService {
     }
 
     public void cadastrar(ReservaDto dto) {
+        if (dto.getData().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("Não é possível realizar uma reserva para uma data que já passou");
+        }
+
         ColaboradorEntity colaborador = colaboradorRepository.findById(dto.getColaboradorId())
                 .orElseThrow(() -> new RuntimeException("Colaborador não cadastrado"));
 
@@ -40,7 +44,7 @@ public class ReservaService {
         DayOfWeek diaReserva = dto.getData().getDayOfWeek();
 
         if (dto.getData().isBefore(recurso.getDataInicialAgendamento()) || dto.getData().isAfter(recurso.getDataFinalAgendamento())) {
-            throw new IllegalArgumentException("A data da reserva não está dentro da data disponível do recurso.");
+            throw new IllegalArgumentException("A data da reserva não está dentro da data disponível do recurso");
         }
 
         if (!recurso.getDiasDaSemanaDisponivel().contains(diaReserva)) {
