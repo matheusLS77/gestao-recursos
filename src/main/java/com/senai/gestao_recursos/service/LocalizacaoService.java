@@ -37,7 +37,7 @@ public class LocalizacaoService {
         retirada.setNome(dto.getNome());
         retirada.setEndereco(dto.getEndereco());
 
-        repository.save(paraEntity(dto));
+        repository.save(retirada);
     }
 
     public void remover(Long id) {
