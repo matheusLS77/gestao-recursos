@@ -113,4 +113,26 @@ public class ColaboradorController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("/cadastro")
+    public String cadastrar(@Valid @ModelAttribute("colaborador") ColaboradorDto dto,
+                            BindingResult bindingResult,
+                            Model model,
+                            RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "cadastro";
+        }
+
+        try {
+            service.cadastrar(dto);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "cadastro";
+        }
+
+        redirectAttributes.addFlashAttribute("mensagem", "Cadastro realizado com sucesso. Faça o login.");
+
+        return "redirect:/login";
+    }
 }

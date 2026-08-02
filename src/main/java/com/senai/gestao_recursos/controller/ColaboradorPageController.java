@@ -43,6 +43,12 @@ public class ColaboradorPageController {
         return "home";
     }
 
+    @GetMapping("/cadastro")
+    public String getCadastro(Model model) {
+        model.addAttribute("colaborador", new ColaboradorDto());
+        return "cadastro";
+    }
+
     @GetMapping("/colaboradorcadastrar")
     public String getCadastrar(Model model, HttpSession session) {
         SessaoDto usuario = SessaoUtil.obterSessao(session);
