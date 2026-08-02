@@ -52,24 +52,23 @@ public class RecursoService {
     }
 
     public void atualizar(RecursoDto dto) {
-        Optional<RecursoEntity> recursoOp = repository.findById(dto.getId());
+        RecursoEntity recurso = repository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Recurso não encontrado"));
 
-        if (recursoOp.isPresent()) {
-            RecursoEntity recurso = recursoOp.get();
-            LocalizacaoEntity localizacao = localizacaoRepository.findById(dto.getLocalizacaoId()).orElseThrow(()
-                    -> new RuntimeException("Localização não encontrada"));
+        LocalizacaoEntity localizacao = localizacaoRepository.findById(dto.getLocalizacaoId()).orElseThrow(()
+                -> new RuntimeException("Localização não encontrada"));
 
-            recurso.setDescricao(dto.getDescricao());
-            recurso.setTipo(dto.getTipo());
-            recurso.setDiasDaSemanaDisponivel(dto.getDiasDaSemanaDisponivel());
-            recurso.setDataInicialAgendamento(dto.getDataInicialAgendamento());
-            recurso.setDataFinalAgendamento(dto.getDataFinalAgendamento());
-            recurso.setHoraInicialAgendamento(dto.getHoraInicialAgendamento());
-            recurso.setHoraFinalAgendamento(dto.getHoraFinalAgendamento());
-            recurso.setLocalizacao(localizacao);
+        recurso.setDescricao(dto.getDescricao());
+        recurso.setTipo(dto.getTipo());
+        recurso.setDiasDaSemanaDisponivel(dto.getDiasDaSemanaDisponivel());
+        recurso.setDataInicialAgendamento(dto.getDataInicialAgendamento());
+        recurso.setDataFinalAgendamento(dto.getDataFinalAgendamento());
+        recurso.setHoraInicialAgendamento(dto.getHoraInicialAgendamento());
+        recurso.setHoraFinalAgendamento(dto.getHoraFinalAgendamento());
+        recurso.setLocalizacao(localizacao);
 
-            repository.save(recurso);
-        }
+        repository.save(recurso);
+
     }
 
     public void remover(Long id) {
