@@ -23,7 +23,6 @@ Sistema web desenvolvido em Java com Spring Boot para gerenciamento de reservas 
 - Bootstrap 5
 - MySQL
 - Docker
-- Docker Compose
 
 ---
 
